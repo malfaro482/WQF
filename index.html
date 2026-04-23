@@ -741,77 +741,55 @@ function applyFilters() {
   });
 }
 
-function normalizeTeamName(value) {
-  return (value || '')
-    .toString()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .trim()
-    .toLowerCase();
+function normalizeTeamName(name) {
+  return (name || '').toString().trim().toLowerCase();
 }
 
-function sameTeam(a, b) {
-  const na = normalizeTeamName(a);
-  const nb = normalizeTeamName(b);
-  if(!na || !nb) return false;
-  return na === nb;
-}
-
-function parseResult(res, teamName, homeTeam, awayTeam) {
-  const raw = (res || '').trim();
-  if(!raw) return { cls:'r-draw', label:'Empate', outcome:'draw' };
-
-  const r = raw.toLowerCase();
-  const isHome = sameTeam(homeTeam, teamName);
-  const isAway = sameTeam(awayTeam, teamName);
-  const extra = raw.match(/\(([^)]*)\)/);
-  const suffix = extra ? ` (${extra[1]})` : '';
-
-  if(r.includes('penal')) {
-    if(r.includes('victoria local')) {
-      return isHome
-        ? { cls:'r-win', label:`Victoria${suffix}`, outcome:'win' }
-        : { cls:'r-loss', label:`Derrota${suffix}`, outcome:'loss' };
-    }
-    if(r.includes('victoria visitante')) {
-      return isAway
-        ? { cls:'r-win', label:`Victoria${suffix}`, outcome:'win' }
-        : { cls:'r-loss', label:`Derrota${suffix}`, outcome:'loss' };
-    }
-    if(r.includes('empate')) {
-      return { cls:'r-draw', label:`Empate${suffix}`, outcome:'draw' };
-    }
-  }
-
-  if(r.includes('victoria local')) {
-    return isHome
-      ? { cls:'r-win', label:'Victoria', outcome:'win' }
-      : { cls:'r-loss', label:'Derrota', outcome:'loss' };
-  }
-  if(r.includes('victoria visitante')) {
-    return isAway
-      ? { cls:'r-win', label:'Victoria', outcome:'win' }
-      : { cls:'r-loss', label:'Derrota', outcome:'loss' };
-  }
-  if(r.includes('derrota local')) {
-    return isHome
-      ? { cls:'r-loss', label:'Derrota', outcome:'loss' }
-      : { cls:'r-win', label:'Victoria', outcome:'win' };
-  }
-  if(r.includes('derrota visitante')) {
-    return isAway
-      ? { cls:'r-loss', label:'Derrota', outcome:'loss' }
-      : { cls:'r-win', label:'Victoria', outcome:'win' };
-  }
-  if(r.includes('victoria')) return { cls:'r-win', label: raw, outcome:'win' };
-  if(r.includes('derrota')) return { cls:'r-loss', label: raw, outcome:'loss' };
-  return { cls:'r-draw', label:'Empate', outcome:'draw' };
+function extractPenaltyScore(res) {
+  const m = (res || '').match(/\((\d+)\s*-\s*(\d+)\s*(?:en\s+penales|on\s+penalty\s+kicks?)\)/i);
+  return m ? [m[1], m[2]] : null;
 }
 
 function getResultClass(res, teamName, homeTeam, awayTeam) {
-  const parsed = parseResult(res, teamName, homeTeam, awayTeam);
-  return [parsed.cls, parsed.label, parsed.outcome];
+  if(!res) return ['r-draw','Empate'];
+
+  const raw = res.toString().trim();
+  const r = raw.toLowerCase();
+  const selected = normalizeTeamName(teamName);
+  const isHome = normalizeTeamName(homeTeam) === selected;
+  const isAway = normalizeTeamName(awayTeam) === selected;
+  const pen = extractPenaltyScore(raw);
+  const penSuffix = pen ? ` (${pen[0]}-${pen[1]} en penales)` : (r.includes('penal') ? ' (en penales)' : '');
+
+  if(r.includes('penal')) {
+    if(r.includes('victoria')) {
+      if((r.includes('local') && isHome) || (r.includes('visitante') && isAway) || (!r.includes('local') && !r.includes('visitante'))) {
+        return ['r-win', `Victoria${penSuffix}`];
+      }
+      return ['r-loss', `Derrota${penSuffix}`];
+    }
+    if(r.includes('derrota')) {
+      return ['r-loss', `Derrota${penSuffix}`];
+    }
+    if(r.includes('empate')) {
+      return ['r-draw', `Empate${penSuffix}`];
+    }
+    return ['r-draw', pen ? `Empate (${pen[0]}-${pen[1]} en penales)` : 'Empate (en penales)'];
+  }
+
+  if(r.includes('victoria')) {
+    if((r.includes('local') && isHome) || (r.includes('visitante') && isAway) || (!r.includes('local') && !r.includes('visitante'))) {
+      return ['r-win', 'Victoria'];
+    }
+    return ['r-loss', 'Derrota'];
+  }
+
+  if(r.includes('derrota')) return ['r-loss', 'Derrota'];
+  if(r.includes('empate')) return ['r-draw', 'Empate'];
+
+  return ['r-draw', raw];
 }
+
 
 function openTeam(teamName) {
   if(!allData) return;
@@ -842,17 +820,51 @@ function openTeam(teamName) {
 
   // Stats
   let wins=0, draws=0, losses=0;
+  const selected = normalizeTeamName(teamName);
   matches.forEach(m => {
-    const parsed = parseResult(m.resultado || '', teamName, m.equipo_local || '', m.equipo_visitante || '');
-    if(parsed.outcome === 'win') wins++;
-    else if(parsed.outcome === 'loss') losses++;
-    else draws++;
+    const home = normalizeTeamName(m.equipo_local);
+    const away = normalizeTeamName(m.equipo_visitante);
+    const isHome = home === selected;
+    const isAway = away === selected;
+    const hg = parseInt(m.goles_local || 0, 10) || 0;
+    const ag = parseInt(m.goles_visitante || 0, 10) || 0;
+    const res = (m.resultado || '').toLowerCase();
+
+    if(res.includes('penal')) {
+      if(res.includes('victoria')) {
+        if((res.includes('local') && isHome) || (res.includes('visitante') && isAway) || (!res.includes('local') && !res.includes('visitante'))) wins++;
+        else losses++;
+      } else if(res.includes('derrota')) {
+        losses++;
+      } else if(res.includes('empate')) {
+        draws++;
+      } else if(hg === ag) {
+        draws++;
+      }
+      return;
+    }
+
+    if(res.includes('victoria')) {
+      if((res.includes('local') && isHome) || (res.includes('visitante') && isAway) || (!res.includes('local') && !res.includes('visitante'))) wins++;
+      else losses++;
+    } else if(res.includes('derrota')) {
+      losses++;
+    } else if(res.includes('empate')) {
+      draws++;
+    } else if(hg === ag) {
+      draws++;
+    } else if((isHome && hg > ag) || (isAway && ag > hg)) {
+      wins++;
+    } else if(isHome || isAway) {
+      losses++;
+    }
   });
   document.getElementById('detailStats').innerHTML = `
     <div class="stat-card"><div class="stat-value" style="color:#22c55e">${wins}</div><div class="stat-label">Victorias</div></div>
     <div class="stat-card"><div class="stat-value" style="color:#94a3b8">${draws}</div><div class="stat-label">Empates</div></div>
     <div class="stat-card"><div class="stat-value" style="color:#ef4444">${losses}</div><div class="stat-label">Derrotas</div></div>
   `;
+
 
   // Table built in renderTable()
   renderTable(teamName, matches);
