@@ -746,7 +746,7 @@ function normalizeTeamName(name) {
 }
 
 function extractPenaltyScore(res) {
-  const m = (res || '').match(/\((\d+)\s*-\s*(\d+)\s*(?:en\s+penales|on\s+penalty\s+kicks?)\)/i);
+  const m = (res || '').match(/\((\d+)\s*-\s*(\d+)\s*(?:(?:en\s+)?penales|on\s+penalty\s+kicks?|pens?)\)/i);
   return m ? [m[1], m[2]] : null;
 }
 
