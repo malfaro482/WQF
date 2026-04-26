@@ -236,6 +236,11 @@ footer{
   .detail-name{font-size:22px}
   thead th:nth-child(6),thead th:nth-child(7){display:none}
 }
+
+  tr.qual-row { background:linear-gradient(90deg,rgba(201,162,39,.13) 0%,rgba(201,162,39,.04) 100%) !important; border-left:3px solid var(--gold) !important; }
+  tr.qual-row:hover { background:linear-gradient(90deg,rgba(201,162,39,.22) 0%,rgba(201,162,39,.1) 100%) !important; }
+  .qual-badge { display:inline-flex;align-items:center;gap:3px;background:linear-gradient(135deg,#c9a227,#8b6914);color:#000;font-size:9px;font-weight:800;letter-spacing:.5px;padding:2px 7px;border-radius:10px;text-transform:uppercase;margin-left:6px;white-space:nowrap;vertical-align:middle; }
+  .detail-qual-banner { background:linear-gradient(90deg,rgba(201,162,39,.15),rgba(201,162,39,.04));border:1px solid rgba(201,162,39,.4);border-radius:8px;padding:10px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--gold);font-weight:600; }
 </style>
 </head>
 <body>
@@ -685,6 +690,7 @@ footer{
     <div class="detail-group-badge" id="detailGroupBadge"></div>
   </div>
   <div class="detail-body">
+    <div class="detail-qual-banner" id="qualBanner" style="display:none"></div>
     <div class="stats-row" id="detailStats"></div>
     <div class="matches-table-wrap">
       <div class="matches-table-title">Últimos 20 Partidos Oficiales</div>
@@ -741,55 +747,23 @@ function applyFilters() {
   });
 }
 
-function normalizeTeamName(name) {
-  return (name || '').toString().trim().toLowerCase();
-}
-
-function extractPenaltyScore(res) {
-  const m = (res || '').match(/\((\d+)\s*-\s*(\d+)\s*(?:(?:en\s+)?penales|on\s+penalty\s+kicks?|pens?)\)/i);
-  return m ? [m[1], m[2]] : null;
-}
-
-function getResultClass(res, teamName, homeTeam, awayTeam) {
+function getResultClass(res, teamName, homeTeam) {
   if(!res) return ['r-draw','Empate'];
-
-  const raw = res.toString().trim();
-  const r = raw.toLowerCase();
-  const selected = normalizeTeamName(teamName);
-  const isHome = normalizeTeamName(homeTeam) === selected;
-  const isAway = normalizeTeamName(awayTeam) === selected;
-  const pen = extractPenaltyScore(raw);
-  const penSuffix = pen ? ` (${pen[0]}-${pen[1]} en penales)` : (r.includes('penal') ? ' (en penales)' : '');
-
+  const r = res.toLowerCase();
+  // Figure out if our team was home or away
+  const isHome = (homeTeam||'').toLowerCase().includes((teamName||'').toLowerCase().split(' ')[0]);
   if(r.includes('penal')) {
-    if(r.includes('victoria')) {
-      if((r.includes('local') && isHome) || (r.includes('visitante') && isAway) || (!r.includes('local') && !r.includes('visitante'))) {
-        return ['r-win', `Victoria${penSuffix}`];
-      }
-      return ['r-loss', `Derrota${penSuffix}`];
-    }
-    if(r.includes('derrota')) {
-      return ['r-loss', `Derrota${penSuffix}`];
-    }
-    if(r.includes('empate')) {
-      return ['r-draw', `Empate${penSuffix}`];
-    }
-    return ['r-draw', pen ? `Empate (${pen[0]}-${pen[1]} en penales)` : 'Empate (en penales)'];
+    const m = res.match(/(\d+)-(\d+)\s*en penales/i);
+    const label = m ? `Pen ${m[1]}-${m[2]}` : 'Penales';
+    // "Victoria Local" = home team won on penalties
+    if(r.includes('local') && r.includes('victoria')) return [isHome ? 'r-win' : 'r-loss', label];
+    if(r.includes('visitante') && r.includes('victoria')) return [isHome ? 'r-loss' : 'r-win', label];
+    return ['r-draw', label];
   }
-
-  if(r.includes('victoria')) {
-    if((r.includes('local') && isHome) || (r.includes('visitante') && isAway) || (!r.includes('local') && !r.includes('visitante'))) {
-      return ['r-win', 'Victoria'];
-    }
-    return ['r-loss', 'Derrota'];
-  }
-
-  if(r.includes('derrota')) return ['r-loss', 'Derrota'];
-  if(r.includes('empate')) return ['r-draw', 'Empate'];
-
-  return ['r-draw', raw];
+  if(r.includes('local') && r.includes('victoria')) return [isHome ? 'r-win' : 'r-loss', isHome ? 'Victoria' : 'Derrota'];
+  if(r.includes('visitante') && r.includes('victoria')) return [isHome ? 'r-loss' : 'r-win', isHome ? 'Derrota' : 'Victoria'];
+  return ['r-draw', 'Empate'];
 }
-
 
 function openTeam(teamName) {
   if(!allData) return;
@@ -812,6 +786,16 @@ function openTeam(teamName) {
   document.getElementById('detailFlag').innerHTML = flagHtml;
   document.getElementById('detailName').textContent = teamName;
   document.getElementById('detailMeta').textContent = conf + ' · ' + matches.length + ' partidos';
+  const qualDate = matches[0] ? (matches[0].fecha_clasif || '') : '';
+  const qb = document.getElementById('qualBanner');
+  if(qualDate === 'Anfitrión') {
+    qb.style.display='flex'; qb.innerHTML='🏟️ <span>Selección Anfitriona del Mundial 2026</span>';
+  } else if(qualDate) {
+    qb.style.display='flex';
+    const d = new Date(qualDate+'T12:00:00');
+    const ds = d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});
+    qb.innerHTML='⭐ <span>Clasificó al Mundial 2026 el <strong>'+ds+'</strong></span>';
+  } else { qb.style.display='none'; }
   const badge = document.getElementById('detailGroupBadge');
   badge.textContent = 'GRUPO ' + group;
   badge.style.color = color;
@@ -819,52 +803,19 @@ function openTeam(teamName) {
   badge.style.background = color + '15';
 
   // Stats
-  let wins=0, draws=0, losses=0;
-  const selected = normalizeTeamName(teamName);
+  let wins=0, draws=0, losses=0, goals=0;
   matches.forEach(m => {
-    const home = normalizeTeamName(m.equipo_local);
-    const away = normalizeTeamName(m.equipo_visitante);
-    const isHome = home === selected;
-    const isAway = away === selected;
-    const hg = parseInt(m.goles_local || 0, 10) || 0;
-    const ag = parseInt(m.goles_visitante || 0, 10) || 0;
-    const res = (m.resultado || '').toLowerCase();
-
-    if(res.includes('penal')) {
-      if(res.includes('victoria')) {
-        if((res.includes('local') && isHome) || (res.includes('visitante') && isAway) || (!res.includes('local') && !res.includes('visitante'))) wins++;
-        else losses++;
-      } else if(res.includes('derrota')) {
-        losses++;
-      } else if(res.includes('empate')) {
-        draws++;
-      } else if(hg === ag) {
-        draws++;
-      }
-      return;
-    }
-
-    if(res.includes('victoria')) {
-      if((res.includes('local') && isHome) || (res.includes('visitante') && isAway) || (!res.includes('local') && !res.includes('visitante'))) wins++;
-      else losses++;
-    } else if(res.includes('derrota')) {
-      losses++;
-    } else if(res.includes('empate')) {
-      draws++;
-    } else if(hg === ag) {
-      draws++;
-    } else if((isHome && hg > ag) || (isAway && ag > hg)) {
-      wins++;
-    } else if(isHome || isAway) {
-      losses++;
-    }
+    const res = (m.resultado||'').toLowerCase();
+    const isHome = (m.equipo_local||'').toLowerCase().includes(teamName.toLowerCase().split(' ')[0]);
+    if(res.includes('local') && res.includes('victoria'))         { isHome ? wins++ : losses++; }
+    else if(res.includes('visitante') && res.includes('victoria')){ isHome ? losses++ : wins++; }
+    else draws++;
   });
   document.getElementById('detailStats').innerHTML = `
     <div class="stat-card"><div class="stat-value" style="color:#22c55e">${wins}</div><div class="stat-label">Victorias</div></div>
-    <div class="stat-card"><div class="stat-value" style="color:#94a3b8">${draws}</div><div class="stat-label">Empates</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#eab308">${draws}</div><div class="stat-label">Empates</div></div>
     <div class="stat-card"><div class="stat-value" style="color:#ef4444">${losses}</div><div class="stat-label">Derrotas</div></div>
   `;
-
 
   // Table built in renderTable()
   renderTable(teamName, matches);
@@ -897,14 +848,15 @@ function renderTable(teamName, matches) {
     const stad  = m.estadio || '';
     const city  = m.ciudad || '';
     const venue = stad || city || '—';
-    const [rClass, rLabel] = getResultClass(m.resultado||'', teamName, home, away);
-    rows += `<tr>
+    const [rClass, rLabel] = getResultClass(m.resultado||'', teamName, home);
+    const isQual = m.es_clasif === true;
+    rows += `<tr class="${isQual ? 'qual-row' : ''}">
       <td class="td-num">${i+1}</td>
       <td class="td-date">${fecha}</td>
       <td style="text-align:right;font-weight:500">${home}</td>
       <td><div style="display:flex;justify-content:center"><div class="score-box">${hg}–${ag}</div></div></td>
       <td style="font-weight:500">${away}</td>
-      <td><span class="result-pill ${rClass}">${rLabel}</span></td>
+      <td><span class="result-pill ${rClass}">${rLabel}</span>${isQual ? '<span class="qual-badge">⭐ Clasificó</span>' : ''}</td>
       <td class="td-comp" title="${comp}">${comp}</td>
       <td class="td-venue" title="${venue}">${venue}</td>
     </tr>`;
