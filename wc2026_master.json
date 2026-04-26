@@ -2921,7 +2921,7 @@
         "ciudad": "Santa Clara, California, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -2939,7 +2939,7 @@
         "ciudad": "Las Vegas, Nevada, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -2957,7 +2957,7 @@
         "ciudad": "Curitiba, Brazil",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -2975,7 +2975,7 @@
         "ciudad": "Asunción, Paraguay",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -2993,7 +2993,7 @@
         "ciudad": "Santiago, Chile",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -3011,7 +3011,7 @@
         "ciudad": "Brasília, Brazil",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -3029,7 +3029,7 @@
         "ciudad": "Maturin, Venezuela",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -3047,7 +3047,7 @@
         "ciudad": "Salvador, Brazil",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -3065,7 +3065,7 @@
         "ciudad": "Brasília, Brazil",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -3083,7 +3083,7 @@
         "ciudad": "Buenos Aires, Argentina",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -3101,7 +3101,7 @@
         "ciudad": "Quito, Ecuador",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -3119,7 +3119,8 @@
         "ciudad": "Sao Paulo, Brazil",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11",
+        "es_clasif": true
       },
       {
         "seleccion": "Brasil",
@@ -3137,7 +3138,7 @@
         "ciudad": "Rio de Janeiro, Brazil",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -3155,7 +3156,7 @@
         "ciudad": "El Alto, La Paz., Bolivia",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -3173,7 +3174,7 @@
         "ciudad": "Seoul, South Korea",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -3191,7 +3192,7 @@
         "ciudad": "Tokyo, Japan",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -3209,7 +3210,7 @@
         "ciudad": "London, England",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -3227,7 +3228,7 @@
         "ciudad": "Lille, France",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -3245,7 +3246,7 @@
         "ciudad": "Foxborough, Massachusetts, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Brasil",
@@ -3263,7 +3264,7 @@
         "ciudad": "Orlando, Florida, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       }
     ],
     "Escocia": [
@@ -3646,7 +3647,7 @@
         "ciudad": "Mayagüez, Puerto Rico",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3664,7 +3665,7 @@
         "ciudad": "Mayagüez, Puerto Rico",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3682,7 +3683,7 @@
         "ciudad": "Oranjestad, Aruba",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3700,7 +3701,7 @@
         "ciudad": "Oranjestad, Aruba",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3718,7 +3719,7 @@
         "ciudad": "Mayagüez, Puerto Rico",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3736,7 +3737,7 @@
         "ciudad": "Mayagüez, Puerto Rico",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3754,7 +3755,7 @@
         "ciudad": "Sumqayit, Azerbaijan",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3772,7 +3773,7 @@
         "ciudad": "Oranjestad, Aruba",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3790,7 +3791,7 @@
         "ciudad": "Oranjestad, Aruba",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3808,7 +3809,7 @@
         "ciudad": "San Diego, California, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3826,7 +3827,7 @@
         "ciudad": "Houston, Texas, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3844,7 +3845,7 @@
         "ciudad": "Arlington, Texas, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3862,7 +3863,7 @@
         "ciudad": "Willemstad, Curaçao",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3880,7 +3881,7 @@
         "ciudad": "Estadio Nacional de Costa Rica, Costa Rica",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3898,7 +3899,7 @@
         "ciudad": "Estadio Nacional de Fútbol, Nicaragua",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3916,7 +3917,7 @@
         "ciudad": "Estadio Nacional Chelato Uclés, Honduras",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3934,7 +3935,7 @@
         "ciudad": "Willemstad, Curaçao",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3952,7 +3953,8 @@
         "ciudad": "Willemstad, Curaçao",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19",
+        "es_clasif": true
       },
       {
         "seleccion": "Haití",
@@ -3970,7 +3972,7 @@
         "ciudad": "Toronto, Canada",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Haití",
@@ -3988,7 +3990,7 @@
         "ciudad": "Toronto, Canada",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       }
     ],
     "Marruecos": [
@@ -6548,7 +6550,7 @@
         "ciudad": "St. George's, Grenada",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6566,7 +6568,7 @@
         "ciudad": "St. George's, Grenada",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6584,7 +6586,7 @@
         "ciudad": "Gros Islet, St Lucia",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6602,7 +6604,7 @@
         "ciudad": "Gros Islet, St Lucia",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6620,7 +6622,7 @@
         "ciudad": "Willemstad, Curaçao",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6638,7 +6640,7 @@
         "ciudad": "Willemstad, Curaçao",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6656,7 +6658,7 @@
         "ciudad": "Belek, Türkiye",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6674,7 +6676,7 @@
         "ciudad": "Willemstad, Curaçao",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6692,7 +6694,7 @@
         "ciudad": "Oranjestad, Aruba",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6710,7 +6712,7 @@
         "ciudad": "San Jose, California, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6728,7 +6730,7 @@
         "ciudad": "Houston, Texas, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6746,7 +6748,7 @@
         "ciudad": "San Jose, California, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6764,7 +6766,7 @@
         "ciudad": "Port of Spain, Trinidad and Tobago",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6782,7 +6784,7 @@
         "ciudad": "Willemstad, Curaçao",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6800,7 +6802,7 @@
         "ciudad": "Willemstad, Curaçao",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6818,7 +6820,7 @@
         "ciudad": "Willemstad, Curaçao",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6836,7 +6838,7 @@
         "ciudad": "Dame Flora Duffy National Sports Centre, Bermuda",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6854,7 +6856,8 @@
         "ciudad": "Sabina Park, Jamaica",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19",
+        "es_clasif": true
       },
       {
         "seleccion": "Curazao",
@@ -6872,7 +6875,7 @@
         "ciudad": "Sydney, Australia",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Curazao",
@@ -6890,7 +6893,7 @@
         "ciudad": "Melbourne, Australia",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       }
     ],
     "Ecuador": [
@@ -6910,7 +6913,7 @@
         "ciudad": "Glendale, Arizona, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -6928,7 +6931,7 @@
         "ciudad": "Houston, Texas, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -6946,7 +6949,7 @@
         "ciudad": "Curitiba, Brazil",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -6964,7 +6967,7 @@
         "ciudad": "Quito, Ecuador",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -6982,7 +6985,7 @@
         "ciudad": "Quito, Ecuador",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -7000,7 +7003,7 @@
         "ciudad": "Montevideo, Uruguay",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -7018,7 +7021,7 @@
         "ciudad": "Quito, Ecuador",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -7036,7 +7039,7 @@
         "ciudad": "Barranquilla, Colombia",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -7054,7 +7057,7 @@
         "ciudad": "Quito, Ecuador",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -7072,7 +7075,7 @@
         "ciudad": "Santiago, Chile",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -7090,7 +7093,7 @@
         "ciudad": "Quito, Ecuador",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -7108,7 +7111,8 @@
         "ciudad": "Lima, Peru",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11",
+        "es_clasif": true
       },
       {
         "seleccion": "Ecuador",
@@ -7126,7 +7130,7 @@
         "ciudad": "Asunción, Paraguay",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -7144,7 +7148,7 @@
         "ciudad": "Quito, Ecuador",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -7162,7 +7166,7 @@
         "ciudad": "Austin, Texas, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -7180,7 +7184,7 @@
         "ciudad": "Guadalajara, Mexico",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -7198,7 +7202,7 @@
         "ciudad": "Toronto, Canada",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -7216,7 +7220,7 @@
         "ciudad": "Harrison, New Jersey, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -7234,7 +7238,7 @@
         "ciudad": "Madrid, Spain",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       },
       {
         "seleccion": "Ecuador",
@@ -7252,7 +7256,7 @@
         "ciudad": "Eindhoven, Netherlands",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-06-10"
+        "fecha_clasif": "2025-06-11"
       }
     ],
     "Japón": [
@@ -11991,7 +11995,7 @@
         "ciudad": "Jakarta, Indonesia",
         "game_number": 1,
         "match_id": "687447",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12009,7 +12013,7 @@
         "ciudad": "Basra, Iraq",
         "game_number": 2,
         "match_id": "687448",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12027,7 +12031,7 @@
         "ciudad": "Basra, Iraq",
         "game_number": 3,
         "match_id": "710439",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12045,7 +12049,7 @@
         "ciudad": "Jaber Al-Ahmad International Stadium, Kuwait",
         "game_number": 4,
         "match_id": "710442",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12063,7 +12067,7 @@
         "ciudad": "Basra, Iraq",
         "game_number": 5,
         "match_id": "710458",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12081,7 +12085,7 @@
         "ciudad": "Korea Republic",
         "game_number": 6,
         "match_id": "710461",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12099,7 +12103,7 @@
         "ciudad": "Basra, Iraq",
         "game_number": 7,
         "match_id": "710476",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12117,7 +12121,7 @@
         "ciudad": "Muscat, Oman",
         "game_number": 8,
         "match_id": "710480",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12135,7 +12139,7 @@
         "ciudad": "Sulaibikhat Stadium, Kuwait",
         "game_number": 9,
         "match_id": "727393",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12153,7 +12157,7 @@
         "ciudad": "Jaber Al-Ahmad International Stadium, Kuwait",
         "game_number": 10,
         "match_id": "727398",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12171,7 +12175,7 @@
         "ciudad": "Jaber Al-Ahmad International Stadium, Kuwait",
         "game_number": 11,
         "match_id": "727401",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12189,7 +12193,7 @@
         "ciudad": "Basra, Iraq",
         "game_number": 12,
         "match_id": "710490",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12207,7 +12211,7 @@
         "ciudad": "Amman, Jordan",
         "game_number": 13,
         "match_id": "710496",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12225,7 +12229,7 @@
         "ciudad": "Basra, Iraq",
         "game_number": 14,
         "match_id": "710507",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12243,7 +12247,7 @@
         "ciudad": "Amman, Jordan",
         "game_number": 15,
         "match_id": "710517",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12261,7 +12265,7 @@
         "ciudad": "Jeddah, Saudi Arabia",
         "game_number": 16,
         "match_id": "753693",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12279,7 +12283,7 @@
         "ciudad": "Jeddah, Saudi Arabia",
         "game_number": 17,
         "match_id": "753696",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12297,7 +12301,7 @@
         "ciudad": "Abu Dhabi, United Arab Emirates",
         "game_number": 18,
         "match_id": "760045",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12315,7 +12319,7 @@
         "ciudad": "Basra, Iraq",
         "game_number": 19,
         "match_id": "760046",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01"
       },
       {
         "seleccion": "Irak",
@@ -12333,7 +12337,8 @@
         "ciudad": "Guadalupe, Mexico",
         "game_number": 20,
         "match_id": "761390",
-        "fecha_clasif": "2026-03-31"
+        "fecha_clasif": "2026-04-01",
+        "es_clasif": true
       }
     ],
     "Noruega": [
@@ -13442,7 +13447,7 @@
         "ciudad": "Houston, Texas, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13460,7 +13465,7 @@
         "ciudad": "East Rutherford, New Jersey, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13478,7 +13483,7 @@
         "ciudad": "Miami Gardens, Florida, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13496,7 +13501,7 @@
         "ciudad": "Buenos Aires, Argentina",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13514,7 +13519,7 @@
         "ciudad": "Barranquilla, Colombia",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13532,7 +13537,7 @@
         "ciudad": "Maturin, Venezuela",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13550,7 +13555,7 @@
         "ciudad": "Buenos Aires, Argentina",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13568,7 +13573,7 @@
         "ciudad": "Asunción, Paraguay",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13586,7 +13591,7 @@
         "ciudad": "Buenos Aires, Argentina",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13604,7 +13609,7 @@
         "ciudad": "Montevideo, Uruguay",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13622,7 +13627,8 @@
         "ciudad": "Buenos Aires, Argentina",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26",
+        "es_clasif": true
       },
       {
         "seleccion": "Argentina",
@@ -13640,7 +13646,7 @@
         "ciudad": "Santiago, Chile",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13658,7 +13664,7 @@
         "ciudad": "Buenos Aires, Argentina",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13676,7 +13682,7 @@
         "ciudad": "Buenos Aires, Argentina",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13694,7 +13700,7 @@
         "ciudad": "Quito, Ecuador",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13712,7 +13718,7 @@
         "ciudad": "Miami Gardens, Florida, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13730,7 +13736,7 @@
         "ciudad": "Fort Lauderdale, Florida, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13748,7 +13754,7 @@
         "ciudad": "Estádio 11 de Novembro, Angola",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13766,7 +13772,7 @@
         "ciudad": "Buenos Aires, Argentina",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       },
       {
         "seleccion": "Argentina",
@@ -13784,7 +13790,7 @@
         "ciudad": "Buenos Aires, Argentina",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-03-25"
+        "fecha_clasif": "2025-03-26"
       }
     ],
     "Austria": [
@@ -17071,7 +17077,7 @@
         "ciudad": "Panama City, Panama",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17089,7 +17095,7 @@
         "ciudad": "Santiago, Chile",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17107,7 +17113,7 @@
         "ciudad": "Inglewood, California, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17125,7 +17131,7 @@
         "ciudad": "Inglewood, California, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17143,7 +17149,7 @@
         "ciudad": "FFB Stadium, Belize",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17161,7 +17167,7 @@
         "ciudad": "Panama City, Panama",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17179,7 +17185,7 @@
         "ciudad": "Carson, California, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17197,7 +17203,7 @@
         "ciudad": "Austin, Texas, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17215,7 +17221,7 @@
         "ciudad": "Austin, Texas, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17233,7 +17239,7 @@
         "ciudad": "Glendale, Arizona, USA",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17251,7 +17257,7 @@
         "ciudad": "Franklin Essed Stadion, Suriname",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17269,7 +17275,7 @@
         "ciudad": "Panama City, Panama",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17287,7 +17293,7 @@
         "ciudad": "San Salvador, El Salvador",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17305,7 +17311,7 @@
         "ciudad": "Panama City, Panama",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17323,7 +17329,7 @@
         "ciudad": "Estadio Cementos Progreso, Guatemala",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17341,7 +17347,8 @@
         "ciudad": "Panama City, Panama",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19",
+        "es_clasif": true
       },
       {
         "seleccion": "Panamá",
@@ -17359,7 +17366,7 @@
         "ciudad": "Tarija, Bolivia",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17377,7 +17384,7 @@
         "ciudad": "Panama City, Panama",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17395,7 +17402,7 @@
         "ciudad": "Durban, South Africa",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       },
       {
         "seleccion": "Panamá",
@@ -17413,7 +17420,7 @@
         "ciudad": "Cape Town, South Africa",
         "game_number": "",
         "match_id": "",
-        "fecha_clasif": "2025-11-18"
+        "fecha_clasif": "2025-11-19"
       }
     ]
   }
