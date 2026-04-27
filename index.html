@@ -914,13 +914,17 @@ const WC_QUALIFIER_COMPS = [
   'Clasificación Mundial - Playoff Intercontinental',
 ];
 
-function getRelevancia(teamName, rivalRank, competicion, fecha) {
+function getRelevancia(teamName, rivalRank, competicion, fecha, isQualMatch=false) {
   const comp = (competicion||'').trim();
   const isFriendly = comp === 'Amistoso Internacional';
   const teamRank = FIFA_RANK_MAP[teamName] || null;
 
-  // WC Qualifier played AFTER team already qualified → BAJO
-  const isWCQual = WC_QUALIFIER_COMPS.includes(comp);
+  // Qualification match is always ALTO regardless of opponent
+  // Check both the date AND the es_clasif flag (handles 1-day timezone offsets)
+  const qualDate = QUAL_DATES_JS[teamName];
+  if(qualDate && qualDate !== 'Anfitrión' && fecha && (fecha === qualDate || isQualMatch)) {
+    return ['rel-alto','ALTO'];
+  }
   if(isWCQual && fecha) {
     const qualDate = QUAL_DATES_JS[teamName];
     if(qualDate && qualDate !== 'Anfitrión' && fecha > qualDate) {
@@ -1030,7 +1034,7 @@ function openTeam(teamName) {
     const rivalRank = isHome ? m.ranking_visitante : m.ranking_local;
     if(rivalRank) { rankSum += rivalRank; rankCount++; }
     // Relevancia counters
-    const [rc] = getRelevancia(teamName, rivalRank, comp, m.fecha||'');
+    const [rc] = getRelevancia(teamName, rivalRank, comp, m.fecha||'', m.es_clasif===true);
     if(rc === 'rel-alto') relAlto++;
     else if(rc === 'rel-inter') relInter++;
     else relBajo++;
@@ -1085,7 +1089,7 @@ function renderTable(teamName, matches) {
     const ar = m.ranking_visitante || null;
     const isHomeRow = (m.equipo_local||'') === teamName;
     const rivalRankVal = isHomeRow ? m.ranking_visitante : m.ranking_local;
-    const [relClass, relLabel] = getRelevancia(teamName, rivalRankVal, comp, fecha);
+    const [relClass, relLabel] = getRelevancia(teamName, rivalRankVal, comp, fecha, isQual);
     rows += `<tr class="${isQual ? 'qual-row' : ''}">
       <td class="td-num">${i+1}</td>
       <td class="td-date">${fecha}</td>
