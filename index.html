@@ -165,7 +165,7 @@ main{padding:28px 32px;max-width:1440px;margin:0 auto;position:relative;z-index:
 
 /* STATS ROW */
 .stats-row{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  display:grid;grid-template-columns:repeat(6,1fr);gap:12px;
   margin-bottom:28px;
 }
 .stat-card{
@@ -231,7 +231,7 @@ footer{
   header,main,.controls,.detail-header,.detail-body{padding-left:16px;padding-right:16px}
   #mainGrid{grid-template-columns:1fr}
   .team-cards{grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
-  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .stats-row{grid-template-columns:repeat(3,1fr)}
   .td-comp,.td-venue{display:none}
   .detail-name{font-size:22px}
   thead th:nth-child(6),thead th:nth-child(7){display:none}
@@ -892,11 +892,11 @@ function openTeam(teamName) {
   // Stats
   let wins=0, draws=0, losses=0;
   let rankSum=0, rankCount=0;
+  let friendlies=0, official=0;
   matches.forEach(m => {
     const res = (m.resultado||'').toLowerCase();
     const isHome = (m.equipo_local||'') === teamName;
     if(res.includes('penal')) {
-      // Penalty shootout — treat as draw for stats
       draws++;
     } else if(res.includes('local') && res.includes('victoria')) {
       isHome ? wins++ : losses++;
@@ -909,7 +909,11 @@ function openTeam(teamName) {
     } else {
       draws++;
     }
-    // Opponent ranking — pick the rival's ranking (not this team's)
+    // Friendly vs Official
+    const comp = (m.competicion||'').trim();
+    if(comp === 'Amistoso Internacional') friendlies++;
+    else official++;
+    // Opponent ranking
     const rivalRank = isHome ? m.ranking_visitante : m.ranking_local;
     if(rivalRank) { rankSum += rivalRank; rankCount++; }
   });
@@ -919,6 +923,8 @@ function openTeam(teamName) {
     <div class="stat-card"><div class="stat-value" style="color:#eab308">${draws}</div><div class="stat-label">Empates</div></div>
     <div class="stat-card"><div class="stat-value" style="color:#ef4444">${losses}</div><div class="stat-label">Derrotas</div></div>
     <div class="stat-card"><div class="stat-value">#${avgRank}</div><div class="stat-label">Promedio Ranking FIFA de Rivales</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#06b6d4">${official}</div><div class="stat-label">Competición Oficial</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#94a3b8">${friendlies}</div><div class="stat-label">Amistosos</div></div>
   `;
 
   // Table built in renderTable()
