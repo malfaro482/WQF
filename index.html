@@ -241,6 +241,16 @@ footer{
   tr.qual-row:hover { background:linear-gradient(90deg,rgba(201,162,39,.22) 0%,rgba(201,162,39,.1) 100%) !important; }
   .qual-badge { display:inline-flex;align-items:center;gap:3px;background:linear-gradient(135deg,#c9a227,#8b6914);color:#000;font-size:9px;font-weight:800;letter-spacing:.5px;padding:2px 7px;border-radius:10px;text-transform:uppercase;margin-left:6px;white-space:nowrap;vertical-align:middle; }
   .detail-qual-banner { background:linear-gradient(90deg,rgba(201,162,39,.15),rgba(201,162,39,.04));border:1px solid rgba(201,162,39,.4);border-radius:8px;padding:10px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--gold);font-weight:600; }
+
+  .rank-badge {
+    display:inline-block;font-size:9px;font-weight:700;
+    color:var(--text2);background:var(--surface2);
+    border:1px solid var(--border);border-radius:3px;
+    padding:1px 4px;margin:0 3px;vertical-align:middle;
+    letter-spacing:.3px;line-height:1.4;flex-shrink:0;
+  }
+  .rank-badge.top10  { color:#c9a227;border-color:rgba(201,162,39,.4); }
+  .rank-badge.top30  { color:#94a3b8;border-color:rgba(148,163,184,.3); }
 </style>
 </head>
 <body>
@@ -747,6 +757,12 @@ function applyFilters() {
   });
 }
 
+function rankBadge(rank, cls='') {
+  if(!rank) return '';
+  let extra = rank <= 10 ? 'top10' : rank <= 30 ? 'top30' : '';
+  return `<span class="rank-badge ${extra}">#${rank}</span>`;
+}
+
 function getResultClass(res, teamName, homeTeam) {
   if(!res) return ['r-draw','Empate'];
   const r = res.toLowerCase();
@@ -850,12 +866,14 @@ function renderTable(teamName, matches) {
     const venue = stad || city || '—';
     const [rClass, rLabel] = getResultClass(m.resultado||'', teamName, home);
     const isQual = m.es_clasif === true;
+    const hr = m.ranking_local || null;
+    const ar = m.ranking_visitante || null;
     rows += `<tr class="${isQual ? 'qual-row' : ''}">
       <td class="td-num">${i+1}</td>
       <td class="td-date">${fecha}</td>
-      <td style="text-align:right;font-weight:500">${home}</td>
+      <td style="text-align:right;font-weight:500">${home} ${rankBadge(hr)}</td>
       <td><div style="display:flex;justify-content:center"><div class="score-box">${hg}–${ag}</div></div></td>
-      <td style="font-weight:500">${away}</td>
+      <td style="font-weight:500">${rankBadge(ar)}${away}</td>
       <td><span class="result-pill ${rClass}">${rLabel}</span>${isQual ? '<span class="qual-badge">⭐ Clasificó</span>' : ''}</td>
       <td class="td-comp" title="${comp}">${comp}</td>
       <td class="td-venue" title="${venue}">${venue}</td>
