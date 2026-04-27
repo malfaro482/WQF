@@ -825,9 +825,20 @@ function openTeam(teamName) {
   matches.forEach(m => {
     const res = (m.resultado||'').toLowerCase();
     const isHome = (m.equipo_local||'') === teamName;
-    if(res.includes('local') && res.includes('victoria'))          { isHome ? wins++ : losses++; }
-    else if(res.includes('visitante') && res.includes('victoria')) { isHome ? losses++ : wins++; }
-    else draws++;
+    if(res.includes('penal')) {
+      // Penalty shootout — treat as draw for stats
+      draws++;
+    } else if(res.includes('local') && res.includes('victoria')) {
+      isHome ? wins++ : losses++;
+    } else if(res.includes('visitante') && res.includes('victoria')) {
+      isHome ? losses++ : wins++;
+    } else if(res === 'victoria') {
+      wins++;
+    } else if(res === 'derrota') {
+      losses++;
+    } else {
+      draws++;
+    }
     // Opponent ranking — pick the rival's ranking (not this team's)
     const rivalRank = isHome ? m.ranking_visitante : m.ranking_local;
     if(rivalRank) { rankSum += rivalRank; rankCount++; }
