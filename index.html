@@ -312,6 +312,11 @@ footer{
   .pts-col-btn{color:var(--text2);transition:color .2s;}
   .pts-col-btn:hover{color:var(--gold) !important;}
   .pts-header-row:hover{background:var(--surface2) !important;}
+
+  .rel-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.5px;white-space:nowrap;}
+  .rel-alto   {background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.3);}
+  .rel-inter  {background:rgba(234,179,8,.15);color:#eab308;border:1px solid rgba(234,179,8,.3);}
+  .rel-bajo   {background:rgba(148,163,184,.12);color:#94a3b8;border:1px solid rgba(148,163,184,.2);}
 </style>
 </head>
 <body>
@@ -780,7 +785,7 @@ footer{
         <thead>
           <tr>
             <th>#</th><th id="fechaTh" style="cursor:pointer;user-select:none" onclick="toggleSort()">Fecha ↓</th><th>Local</th><th>Marcador</th><th>Visitante</th>
-            <th>Resultado</th><th>Competición</th><th>Estadio / Ciudad</th>
+            <th>Resultado</th><th>Competición</th><th>Estadio / Ciudad</th><th>Relevancia</th>
           </tr>
         </thead>
         <tbody id="detailTableBody"></tbody>
@@ -833,6 +838,68 @@ function rankBadge(rank, cls='') {
   if(!rank) return '';
   let extra = rank <= 10 ? 'top10' : rank <= 30 ? 'top30' : '';
   return `<span class="rank-badge ${extra}">#${rank}</span>`;
+}
+
+
+const FIFA_RANK_MAP = {
+    "Francia":1,"España":2,"Argentina":3,"Inglaterra":4,"Portugal":5,
+    "Brasil":6,"Países Bajos":7,"Marruecos":8,"Bélgica":9,"Alemania":10,
+    "Croacia":11,"Italia":12,"Colombia":13,"Senegal":14,"México":15,
+    "Estados Unidos":16,"Uruguay":17,"Japón":18,"Suiza":19,"Dinamarca":20,
+    "Irán":21,"Turquía":22,"Ecuador":23,"Austria":24,"Corea del Sur":25,
+    "Nigeria":26,"Australia":27,"Argelia":28,"Egipto":29,"Canadá":30,
+    "Noruega":31,"Ucrania":32,"Panamá":33,"Costa de Marfil":34,"Polonia":35,
+    "Rusia":36,"Gales":37,"Suecia":38,"Serbia":39,"Paraguay":40,
+    "República Checa":41,"Hungría":42,"Escocia":43,"Túnez":44,"Camerún":45,
+    "RD Congo":46,"Grecia":47,"Eslovaquia":48,"Venezuela":49,"Uzbekistán":50,
+    "Costa Rica":51,"Malí":52,"Perú":53,"Chile":54,"Qatar":55,
+    "Rumanía":56,"Irak":57,"Eslovenia":58,"Irlanda":59,"Sudáfrica":60,
+    "Arabia Saudita":61,"Burkina Faso":62,"Jordania":63,"Albania":64,
+    "Bosnia y Herzegovina":65,"Honduras":66,"Macedonia del Norte":67,
+    "Emiratos Árabes Unidos":68,"Cabo Verde":69,"Irlanda del Norte":70,
+    "Jamaica":71,"Georgia":72,"Finlandia":73,"Ghana":74,"Islandia":75,
+    "Bolivia":76,"Israel":77,"Kosovo":78,"Omán":79,"Guinea":80,
+    "Montenegro":81,"Curazao":82,"Haití":83,"Siria":84,"Nueva Zelanda":85,
+    "Bulgaria":86,"Gabón":87,"Uganda":88,"Angola":89,"Benín":90,
+    "Baréin":91,"Zambia":92,"Tailandia":93,"China":94,"Palestina":95,
+    "Guatemala":96,"Bielorrusia":97,"Luxemburgo":98,"Vietnam":99,
+    "El Salvador":100,"Mozambique":101,"Trinidad y Tobago":102,
+    "Tayikistán":103,"Madagascar":104,"Guinea Ecuatorial":105,"Armenia":106,
+    "Kirguistán":107,"Líbano":108,"Comoras":109,"Kazajistán":110,
+    "Kenia":111,"Libia":112,"Tanzania":113,"Níger":114,"Mauritania":115,
+    "Gambia":116,"Sudán":117,"Corea del Norte":118,"Sierra Leona":119,
+    "Namibia":120,"Togo":121,"Indonesia":122,"Islas Feroe":123,
+    "Azerbaiyán":124,"Surinam":125,"Chipre":126,"Malaui":127,"Ruanda":128,
+    "Estonia":129,"Zimbabue":130,"Nicaragua":131,"Guinea-Bisáu":132,
+    "Congo":133,"Kuwait":134,"Filipinas":135,"India":136,"Letonia":137,
+    "Malasia":138,"República Centroafricana":139,"Liberia":140,
+    "Turkmenistán":141,"Burundi":142,"República Dominicana":143,
+    "Etiopía":144,"Lesoto":145,"Botsuana":146,"Singapur":147,
+    "Lituania":148,"Yemen":149,"Guyana":150,"Nueva Caledonia":151,
+    "Islas Salomón":153,"Fiyi":154,"Hong Kong":155,"Puerto Rico":156,
+    "Myanmar":158,"Moldavia":159,"Malta":161,"Cuba":164,"Suazilandia":165,
+    "Bermudas":166,"Papúa Nueva Guinea":168,"Andorra":173,
+    "Barbados":179,"Belice":180,"Bangladés":181,"Chad":183,
+    "Afganistán":169,"Granada":163,"Mauricio":178,"Irlanda":59,
+    "Tayikistán":103,"Samoa":190,"Somalia":198,"San Marino":211,
+    "Yibuti":197,"Vanuatu":160,"Tahiti":157,"Seychelles":204
+  };
+
+function getRelevancia(teamName, rivalRank, competicion) {
+  const isFriendly = (competicion||'').trim() === 'Amistoso Internacional';
+  const teamRank = FIFA_RANK_MAP[teamName] || null;
+
+  if(!rivalRank) return ['rel-bajo','BAJO'];
+
+  const diff = teamRank ? Math.abs(rivalRank - teamRank) : rivalRank;
+
+  if(isFriendly) {
+    // Friendly: BAJO if opponent is 15+ positions away (weaker), INTERMEDIO if within 15
+    return diff <= 15 ? ['rel-inter','INTERMEDIO'] : ['rel-bajo','BAJO'];
+  } else {
+    // Official: INTERMEDIO if 15+ away, ALTO if within 15
+    return diff <= 15 ? ['rel-alto','ALTO'] : ['rel-inter','INTERMEDIO'];
+  }
 }
 
 function getResultClass(res, teamName, homeTeam) {
