@@ -165,7 +165,7 @@ main{padding:28px 32px;max-width:1440px;margin:0 auto;position:relative;z-index:
 
 /* STATS ROW */
 .stats-row{
-  display:grid;grid-template-columns:repeat(6,1fr);gap:12px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
   margin-bottom:28px;
 }
 .stat-card{
@@ -314,9 +314,9 @@ footer{
   .pts-header-row:hover{background:var(--surface2) !important;}
 
   .rel-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.5px;white-space:nowrap;}
-  .rel-alto   {background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.3);}
+  .rel-alto   {background:rgba(34,197,94,.15);color:#22c55e;border:1px solid rgba(34,197,94,.3);}
   .rel-inter  {background:rgba(234,179,8,.15);color:#eab308;border:1px solid rgba(234,179,8,.3);}
-  .rel-bajo   {background:rgba(148,163,184,.12);color:#94a3b8;border:1px solid rgba(148,163,184,.2);}
+  .rel-bajo   {background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.3);}
 </style>
 </head>
 <body>
@@ -885,19 +885,56 @@ const FIFA_RANK_MAP = {
     "Yibuti":197,"Vanuatu":160,"Tahiti":157,"Seychelles":204
   };
 
-function getRelevancia(teamName, rivalRank, competicion) {
-  const isFriendly = (competicion||'').trim() === 'Amistoso Internacional';
+const QUAL_DATES_JS = {
+  "México":"Anfitrión","Estados Unidos":"Anfitrión","Canadá":"Anfitrión",
+  "Sudáfrica":"2025-10-14","Paraguay":"2025-09-04","Corea del Sur":"2025-06-05",
+  "Australia":"2025-06-10","República Checa":"2026-03-31","Turquía":"2026-03-31",
+  "Alemania":"2025-11-17","Curazao":"2025-11-18","Qatar":"2025-10-14",
+  "Costa de Marfil":"2025-10-14","Suiza":"2025-11-18","Ecuador":"2025-06-10",
+  "Brasil":"2025-06-10","Escocia":"2025-11-18","Países Bajos":"2025-11-17",
+  "Marruecos":"2025-09-05","Japón":"2025-03-20","Haití":"2025-11-18",
+  "Suecia":"2026-03-31","España":"2025-11-18","Túnez":"2025-09-08",
+  "Bélgica":"2025-11-18","Egipto":"2025-10-08","Irán":"2025-03-25",
+  "Nueva Zelanda":"2025-03-24","Cabo Verde":"2025-10-13","Arabia Saudita":"2025-10-14",
+  "Uruguay":"2025-09-04","Francia":"2025-11-13","Senegal":"2025-10-14",
+  "Irak":"2026-03-31","Noruega":"2025-11-16","Argentina":"2025-03-25",
+  "Argelia":"2025-10-09","Austria":"2025-11-18","Jordania":"2025-06-05",
+  "Portugal":"2025-11-16","RD Congo":"2026-03-31","Uzbekistán":"2025-06-05",
+  "Colombia":"2025-09-04","Inglaterra":"2025-10-14","Croacia":"2025-11-14",
+  "Ghana":"2025-10-12","Panamá":"2025-11-18","Bosnia y Herzegovina":null
+};
+
+const WC_QUALIFIER_COMPS = [
+  'Clasificación Mundial - AFC',
+  'Clasificación Mundial - CAF',
+  'Clasificación Mundial - CONCACAF',
+  'Clasificación Mundial - CONMEBOL',
+  'Clasificación Mundial - OFC',
+  'Clasificación Mundial - UEFA',
+  'Clasificación Mundial - Playoff Intercontinental',
+];
+
+function getRelevancia(teamName, rivalRank, competicion, fecha) {
+  const comp = (competicion||'').trim();
+  const isFriendly = comp === 'Amistoso Internacional';
   const teamRank = FIFA_RANK_MAP[teamName] || null;
+
+  // WC Qualifier played AFTER team already qualified → BAJO
+  const isWCQual = WC_QUALIFIER_COMPS.includes(comp);
+  if(isWCQual && fecha) {
+    const qualDate = QUAL_DATES_JS[teamName];
+    if(qualDate && qualDate !== 'Anfitrión' && fecha > qualDate) {
+      return ['rel-bajo','BAJO'];
+    }
+  }
 
   if(!rivalRank) return ['rel-bajo','BAJO'];
 
   const diff = teamRank ? Math.abs(rivalRank - teamRank) : rivalRank;
 
   if(isFriendly) {
-    // Friendly: BAJO if opponent is 15+ positions away (weaker), INTERMEDIO if within 15
     return diff <= 15 ? ['rel-inter','INTERMEDIO'] : ['rel-bajo','BAJO'];
   } else {
-    // Official: INTERMEDIO if 15+ away, ALTO if within 15
     return diff <= 15 ? ['rel-alto','ALTO'] : ['rel-inter','INTERMEDIO'];
   }
 }
@@ -960,6 +997,7 @@ function openTeam(teamName) {
   let wins=0, draws=0, losses=0;
   let rankSum=0, rankCount=0;
   let friendlies=0, official=0;
+  let relAlto=0, relInter=0, relBajo=0;
   matches.forEach(m => {
     const res = (m.resultado||'').toLowerCase();
     const isHome = (m.equipo_local||'') === teamName;
@@ -983,6 +1021,11 @@ function openTeam(teamName) {
     // Opponent ranking
     const rivalRank = isHome ? m.ranking_visitante : m.ranking_local;
     if(rivalRank) { rankSum += rivalRank; rankCount++; }
+    // Relevancia counters
+    const [rc] = getRelevancia(teamName, rivalRank, comp, m.fecha||'');
+    if(rc === 'rel-alto') relAlto++;
+    else if(rc === 'rel-inter') relInter++;
+    else relBajo++;
   });
   const avgRank = rankCount > 0 ? Math.round(rankSum / rankCount) : '—';
   document.getElementById('detailStats').innerHTML = `
@@ -992,6 +1035,9 @@ function openTeam(teamName) {
     <div class="stat-card"><div class="stat-value">#${avgRank}</div><div class="stat-label">Promedio Ranking FIFA de Rivales</div></div>
     <div class="stat-card"><div class="stat-value" style="color:#06b6d4">${official}</div><div class="stat-label">Competición Oficial</div></div>
     <div class="stat-card"><div class="stat-value" style="color:#94a3b8">${friendlies}</div><div class="stat-label">Amistosos</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#22c55e">${relAlto}</div><div class="stat-label">Relevancia Alta</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#eab308">${relInter}</div><div class="stat-label">Relevancia Intermedia</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#ef4444">${relBajo}</div><div class="stat-label">Relevancia Baja</div></div>
   `;
 
   // Table built in renderTable()
@@ -1031,7 +1077,7 @@ function renderTable(teamName, matches) {
     const ar = m.ranking_visitante || null;
     const isHomeRow = (m.equipo_local||'') === teamName;
     const rivalRankVal = isHomeRow ? m.ranking_visitante : m.ranking_local;
-    const [relClass, relLabel] = getRelevancia(teamName, rivalRankVal, comp);
+    const [relClass, relLabel] = getRelevancia(teamName, rivalRankVal, comp, fecha);
     rows += `<tr class="${isQual ? 'qual-row' : ''}">
       <td class="td-num">${i+1}</td>
       <td class="td-date">${fecha}</td>
