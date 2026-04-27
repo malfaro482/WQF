@@ -776,6 +776,9 @@ function getResultClass(res, teamName, homeTeam) {
   }
   if(r.includes('local') && r.includes('victoria')) return [isHome ? 'r-win' : 'r-loss', isHome ? 'Victoria' : 'Derrota'];
   if(r.includes('visitante') && r.includes('victoria')) return [isHome ? 'r-loss' : 'r-win', isHome ? 'Derrota' : 'Victoria'];
+  // Handle plain "Victoria" or "Derrota" stored directly
+  if(r === 'victoria') return ['r-win', 'Victoria'];
+  if(r === 'derrota')  return ['r-loss', 'Derrota'];
   return ['r-draw', 'Empate'];
 }
 
