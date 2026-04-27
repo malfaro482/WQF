@@ -920,13 +920,14 @@ function getRelevancia(teamName, rivalRank, competicion, fecha, isQualMatch=fals
   const teamRank = FIFA_RANK_MAP[teamName] || null;
 
   // Qualification match is always ALTO regardless of opponent
-  // Check both the date AND the es_clasif flag (handles 1-day timezone offsets)
   const qualDate = QUAL_DATES_JS[teamName];
   if(qualDate && qualDate !== 'Anfitrión' && fecha && (fecha === qualDate || isQualMatch)) {
     return ['rel-alto','ALTO'];
   }
+
+  // WC Qualifier played AFTER team already qualified → BAJO
+  const isWCQual = WC_QUALIFIER_COMPS.includes(comp);
   if(isWCQual && fecha) {
-    const qualDate = QUAL_DATES_JS[teamName];
     if(qualDate && qualDate !== 'Anfitrión' && fecha > qualDate) {
       return ['rel-bajo','BAJO'];
     }
