@@ -309,6 +309,8 @@ footer{
   .pts-pts-label{font-size:10px;color:var(--text2);font-weight:600;letter-spacing:1px;flex-shrink:0;}
   .pts-avg-col{width:120px;flex-shrink:0;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--text2);}
   .pts-header-row{background:var(--surface2);border-bottom:1px solid var(--border) !important;cursor:default !important;}
+  .pts-col-btn{color:var(--text2);transition:color .2s;}
+  .pts-col-btn:hover{color:var(--gold) !important;}
   .pts-header-row:hover{background:var(--surface2) !important;}
 </style>
 </head>
@@ -750,9 +752,6 @@ footer{
 <div id="pointsPage">
   <div class="pts-header">
     <div class="pts-title">Tabla de Puntos — Últimos 20 Partidos</div>
-    <button class="pts-sort-btn" id="sortBtn" onclick="togglePtsSort()">
-      <span id="sortIcon">↓</span> <span id="sortLabel">Mayor a menor</span>
-    </button>
   </div>
   <div class="pts-table-wrap" id="ptsTableWrap"></div>
 </div>
@@ -1004,7 +1003,8 @@ function toggleSort() {
 const POINTS_DATA = [["Marruecos", 49, 79], ["España", 48, 31], ["Senegal", 47, 75], ["Inglaterra", 46, 65], ["Japón", 46, 65], ["Argentina", 45, 51], ["Costa de Marfil", 45, 83], ["Noruega", 45, 71], ["RD Congo", 44, 77], ["Argelia", 43, 94], ["Turquía", 42, 49], ["Alemania", 42, 41], ["Australia", 40, 73], ["Francia", 40, 36], ["Austria", 40, 78], ["Corea del Sur", 40, 69], ["Uzbekistán", 40, 75], ["Canadá", 40, 57], ["Portugal", 40, 37], ["Croacia", 39, 58], ["Países Bajos", 38, 60], ["Irán", 38, 81], ["México", 37, 44], ["Haití", 37, 104], ["Egipto", 37, 78], ["Panamá", 36, 81], ["Sudáfrica", 34, 90], ["República Checa", 34, 88], ["Irak", 34, 85], ["Brasil", 33, 29], ["Curazao", 33, 112], ["Suecia", 33, 64], ["Cabo Verde", 33, 96], ["Túnez", 33, 92], ["Estados Unidos", 32, 39], ["Nueva Zelanda", 32, 70], ["Ecuador", 31, 29], ["Suiza", 31, 42], ["Paraguay", 30, 26], ["Arabia Saudita", 30, 63], ["Jordania", 30, 73], ["Bélgica", 30, 60], ["Colombia", 29, 32], ["Escocia", 27, 57], ["Uruguay", 25, 38], ["Bosnia y Herzegovina", 24, 62], ["Ghana", 23, 83], ["Qatar", 20, 84]];
 const FLAG_CODES_MAP = {"Alemania": "de", "Arabia Saudita": "sa", "Argelia": "dz", "Argentina": "ar", "Australia": "au", "Austria": "at", "Bosnia y Herzegovina": "ba", "Brasil": "br", "B\u00e9lgica": "be", "Cabo Verde": "cv", "Canad\u00e1": "ca", "Colombia": "co", "Corea del Sur": "kr", "Costa de Marfil": "ci", "Croacia": "hr", "Curazao": "cw", "Ecuador": "ec", "Egipto": "eg", "Escocia": "gb-sct", "Espa\u00f1a": "es", "Estados Unidos": "us", "Francia": "fr", "Ghana": "gh", "Hait\u00ed": "ht", "Inglaterra": "gb-eng", "Irak": "iq", "Ir\u00e1n": "ir", "Jap\u00f3n": "jp", "Jordania": "jo", "Marruecos": "ma", "M\u00e9xico": "mx", "Noruega": "no", "Nueva Zelanda": "nz", "Panam\u00e1": "pa", "Paraguay": "py", "Pa\u00edses Bajos": "nl", "Portugal": "pt", "Qatar": "qa", "RD Congo": "cd", "Rep\u00fablica Checa": "cz", "Senegal": "sn", "Sud\u00e1frica": "za", "Suecia": "se", "Suiza": "ch", "Turqu\u00eda": "tr", "T\u00fanez": "tn", "Uruguay": "uy", "Uzbekist\u00e1n": "uz"};
 
-let ptsSortAsc = false; // default: highest first
+let ptsSortCol = 'pts'; // 'pts' or 'avg'
+let ptsSortAsc = false; // false = highest first
 
 function flagUrl2(name) {
   const code = FLAG_CODES_MAP[name];
@@ -1012,17 +1012,23 @@ function flagUrl2(name) {
 }
 
 function renderPointsTable() {
-  const sorted = [...POINTS_DATA].sort((a,b) => ptsSortAsc ? a[1]-b[1] : b[1]-a[1]);
+  const sorted = [...POINTS_DATA].sort((a,b) => {
+    const valA = ptsSortCol === 'pts' ? a[1] : (a[2] || 999);
+    const valB = ptsSortCol === 'pts' ? b[1] : (b[2] || 999);
+    return ptsSortAsc ? valA - valB : valB - valA;
+  });
   const max = sorted[0][1];
   let html = '';
   // Header row
+  const ptsArrow = ptsSortCol==='pts' ? (ptsSortAsc?'↑':'↓') : '';
+  const avgArrow = ptsSortCol==='avg' ? (ptsSortAsc?'↑':'↓') : '';
   html += `<div class="pts-row pts-header-row">
     <div class="pts-pos" style="color:var(--text2);font-size:10px;font-family:'Barlow',sans-serif;font-weight:700;letter-spacing:1px">#</div>
     <div class="pts-flag"></div>
     <div class="pts-name" style="font-size:10px;color:var(--text2);font-weight:700;letter-spacing:1px;text-transform:uppercase">Selección</div>
     <div class="pts-bar-wrap" style="font-size:10px;color:var(--text2);font-weight:700;letter-spacing:1px;text-transform:uppercase">Puntos</div>
-    <div class="pts-score" style="font-size:10px;color:var(--text2);font-weight:700;letter-spacing:1px;font-family:'Barlow',sans-serif;text-transform:uppercase">PTS</div>
-    <div class="pts-avg-col" style="font-size:10px;color:var(--text2);font-weight:700;letter-spacing:1px;text-transform:uppercase;width:120px;text-align:center">Promedio Ranking de Rivales</div>
+    <div class="pts-score pts-col-btn" onclick="sortPtsBy('pts')" style="font-size:10px;font-weight:700;letter-spacing:1px;font-family:'Barlow',sans-serif;text-transform:uppercase;cursor:pointer" title="Ordenar por puntos">PTS ${ptsArrow}</div>
+    <div class="pts-avg-col pts-col-btn" onclick="sortPtsBy('avg')" style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer" title="Ordenar por ranking de rivales">Promedio Ranking de Rivales ${avgArrow}</div>
   </div>`;
   sorted.forEach(([name, pts, avgRank], i) => {
     const rank = ptsSortAsc ? POINTS_DATA.length - i : i + 1;
@@ -1045,10 +1051,13 @@ function renderPointsTable() {
   document.getElementById('ptsTableWrap').innerHTML = html;
 }
 
-function togglePtsSort() {
-  ptsSortAsc = !ptsSortAsc;
-  document.getElementById('sortIcon').textContent = ptsSortAsc ? '↑' : '↓';
-  document.getElementById('sortLabel').textContent = ptsSortAsc ? 'Menor a mayor' : 'Mayor a menor';
+function sortPtsBy(col) {
+  if(ptsSortCol === col) {
+    ptsSortAsc = !ptsSortAsc; // toggle direction
+  } else {
+    ptsSortCol = col;
+    ptsSortAsc = false; // always start highest first on new column
+  }
   renderPointsTable();
 }
 
