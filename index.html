@@ -767,7 +767,7 @@ function getResultClass(res, teamName, homeTeam) {
   if(!res) return ['r-draw','Empate'];
   const r = res.toLowerCase();
   // Figure out if our team was home or away
-  const isHome = (homeTeam||'').toLowerCase().includes((teamName||'').toLowerCase().split(' ')[0]);
+  const isHome = (homeTeam||'') === (teamName||'');
   if(r.includes('penal')) {
     // Show result text exactly as stored — e.g. "Empate (2-4 en penales)"
     if(r.includes('local') && r.includes('victoria')) return [isHome ? 'r-win' : 'r-loss', res];
@@ -822,10 +822,9 @@ function openTeam(teamName) {
   // Stats
   let wins=0, draws=0, losses=0;
   let rankSum=0, rankCount=0;
-  const teamFirst = teamName.toLowerCase().split(' ')[0];
   matches.forEach(m => {
     const res = (m.resultado||'').toLowerCase();
-    const isHome = (m.equipo_local||'').toLowerCase().includes(teamFirst);
+    const isHome = (m.equipo_local||'') === teamName;
     if(res.includes('local') && res.includes('victoria'))          { isHome ? wins++ : losses++; }
     else if(res.includes('visitante') && res.includes('victoria')) { isHome ? losses++ : wins++; }
     else draws++;
