@@ -766,18 +766,16 @@ function rankBadge(rank, cls='') {
 function getResultClass(res, teamName, homeTeam) {
   if(!res) return ['r-draw','Empate'];
   const r = res.toLowerCase();
-  // Figure out if our team was home or away
   const isHome = (homeTeam||'') === (teamName||'');
   if(r.includes('penal')) {
-    // Show result text exactly as stored — e.g. "Empate (2-4 en penales)"
-    if(r.includes('local') && r.includes('victoria')) return [isHome ? 'r-win' : 'r-loss', res];
-    if(r.includes('visitante') && r.includes('victoria')) return [isHome ? 'r-loss' : 'r-win', res];
+    // Always display the full original text e.g. "Empate (4-3 en penales)"
+    if(r.includes('victoria') && r.includes('local'))      return [isHome ? 'r-win' : 'r-loss', res];
+    if(r.includes('victoria') && r.includes('visitante'))  return [isHome ? 'r-loss' : 'r-win', res];
     return ['r-draw', res];
   }
-  if(r.includes('local') && r.includes('victoria')) return [isHome ? 'r-win' : 'r-loss', isHome ? 'Victoria' : 'Derrota'];
-  if(r.includes('visitante') && r.includes('victoria')) return [isHome ? 'r-loss' : 'r-win', isHome ? 'Derrota' : 'Victoria'];
-  // Handle plain "Victoria" or "Derrota" stored directly
-  if(r === 'victoria') return ['r-win', 'Victoria'];
+  if(r.includes('local') && r.includes('victoria'))      return [isHome ? 'r-win' : 'r-loss', isHome ? 'Victoria' : 'Derrota'];
+  if(r.includes('visitante') && r.includes('victoria'))  return [isHome ? 'r-loss' : 'r-win', isHome ? 'Derrota' : 'Victoria'];
+  if(r === 'victoria') return ['r-win',  'Victoria'];
   if(r === 'derrota')  return ['r-loss', 'Derrota'];
   return ['r-draw', 'Empate'];
 }
