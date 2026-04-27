@@ -933,9 +933,17 @@ function getRelevancia(teamName, rivalRank, competicion, fecha) {
   const diff = teamRank ? Math.abs(rivalRank - teamRank) : rivalRank;
 
   if(isFriendly) {
-    return diff <= 15 ? ['rel-inter','INTERMEDIO'] : ['rel-bajo','BAJO'];
+    // Opponent better than you (lower number) → always at least INTERMEDIO
+    // Opponent worse by more than 15 → BAJO
+    const opponentIsBetter = teamRank && rivalRank < teamRank;
+    const opponentWorseByMore = teamRank && (rivalRank - teamRank) > 15;
+    return opponentWorseByMore ? ['rel-bajo','BAJO'] : ['rel-inter','INTERMEDIO'];
   } else {
-    return diff <= 15 ? ['rel-alto','ALTO'] : ['rel-inter','INTERMEDIO'];
+    // Opponent better than you (lower number) → always at least ALTO
+    // Opponent worse by more than 15 → INTERMEDIO
+    const opponentIsBetter = teamRank && rivalRank < teamRank;
+    const opponentWorseByMore = teamRank && (rivalRank - teamRank) > 15;
+    return opponentWorseByMore ? ['rel-inter','INTERMEDIO'] : ['rel-alto','ALTO'];
   }
 }
 
