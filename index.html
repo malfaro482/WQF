@@ -1029,6 +1029,9 @@ function renderTable(teamName, matches) {
     const isQual = m.es_clasif === true;
     const hr = m.ranking_local || null;
     const ar = m.ranking_visitante || null;
+    const isHomeRow = (m.equipo_local||'') === teamName;
+    const rivalRankVal = isHomeRow ? m.ranking_visitante : m.ranking_local;
+    const [relClass, relLabel] = getRelevancia(teamName, rivalRankVal, comp);
     rows += `<tr class="${isQual ? 'qual-row' : ''}">
       <td class="td-num">${i+1}</td>
       <td class="td-date">${fecha}</td>
@@ -1038,6 +1041,7 @@ function renderTable(teamName, matches) {
       <td><span class="result-pill ${rClass}">${rLabel}</span>${isQual ? '<span class="qual-badge">⭐ Clasificó</span>' : ''}</td>
       <td class="td-comp" title="${comp}">${comp}</td>
       <td class="td-venue" title="${venue}">${venue}</td>
+      <td><span class="rel-badge ${relClass}">${relLabel}</span></td>
     </tr>`;
   });
   document.getElementById('detailTableBody').innerHTML = rows;
