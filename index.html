@@ -251,6 +251,62 @@ footer{
   }
   .rank-badge.top10  { color:#c9a227;border-color:rgba(201,162,39,.4); }
   .rank-badge.top30  { color:#94a3b8;border-color:rgba(148,163,184,.3); }
+
+  /* TABS */
+  .tab-bar{display:flex;gap:4px;background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;}
+  .tab-btn{
+    background:none;border:none;border-bottom:2px solid transparent;
+    color:var(--text2);font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;
+    padding:14px 20px;cursor:pointer;transition:all .2s;letter-spacing:.5px;
+    text-transform:uppercase;
+  }
+  .tab-btn:hover{color:var(--text);}
+  .tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+  /* POINTS TABLE PAGE */
+  #pointsPage{display:none;padding:28px 32px;max-width:900px;margin:0 auto;}
+  #pointsPage.visible{display:block;}
+  .pts-header{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:20px;flex-wrap:wrap;gap:12px;
+  }
+  .pts-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--gold);}
+  .pts-sort-btn{
+    background:var(--surface);border:1px solid var(--border);color:var(--text2);
+    padding:7px 14px;border-radius:6px;font-size:12px;font-family:'Barlow',sans-serif;
+    cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;
+  }
+  .pts-sort-btn:hover{border-color:var(--gold);color:var(--gold);}
+  .pts-table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+  .pts-row{
+    display:flex;align-items:center;gap:16px;
+    padding:10px 20px;border-bottom:1px solid rgba(28,38,64,.5);
+    transition:background .15s;cursor:default;
+  }
+  .pts-row:last-child{border-bottom:none;}
+  .pts-row:hover{background:var(--surface2);}
+  .pts-pos{
+    font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--text2);
+    width:32px;text-align:center;flex-shrink:0;
+  }
+  .pts-pos.gold{color:#c9a227;}
+  .pts-pos.silver{color:#94a3b8;}
+  .pts-pos.bronze{color:#cd7f32;}
+  .pts-flag{
+    width:40px;height:27px;border-radius:4px;overflow:hidden;flex-shrink:0;
+    border:1px solid rgba(255,255,255,.08);background:var(--surface2);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .pts-flag img{width:100%;height:100%;object-fit:cover;display:block;}
+  .pts-name{flex:1;font-weight:600;font-size:14px;}
+  .pts-bar-wrap{flex:2;display:flex;align-items:center;gap:10px;}
+  .pts-bar-bg{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+  .pts-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold),#e8c84a);transition:width .4s ease;}
+  .pts-score{
+    font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);
+    width:42px;text-align:right;flex-shrink:0;
+  }
+  .pts-pts-label{font-size:10px;color:var(--text2);font-weight:600;letter-spacing:1px;flex-shrink:0;}
 </style>
 </head>
 <body>
@@ -269,7 +325,11 @@ footer{
   </div>
 </header>
 
-<div class="controls">
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('grid')">🏳 Selecciones</button>
+  <button class="tab-btn" onclick="switchTab('points')">🏆 Tabla de Puntos</button>
+</div>
+<div class="controls" id="gridControls">
   <span class="ctrl-label">Grupo</span>
   <select id="filterGroup" onchange="applyFilters()">
     <option value="">Todos</option>
@@ -684,6 +744,16 @@ footer{
         </div></div></div>
 </main>
 
+<div id="pointsPage">
+  <div class="pts-header">
+    <div class="pts-title">Tabla de Puntos — Últimos 20 Partidos</div>
+    <button class="pts-sort-btn" id="sortBtn" onclick="togglePtsSort()">
+      <span id="sortIcon">↓</span> <span id="sortLabel">Mayor a menor</span>
+    </button>
+  </div>
+  <div class="pts-table-wrap" id="ptsTableWrap"></div>
+</div>
+
 <footer>FIFA World Cup 2026 &nbsp;·&nbsp; Datos: ESPN &nbsp;·&nbsp; Solo partidos oficiales</footer>
 
 <!-- DETAIL PAGE -->
@@ -924,6 +994,65 @@ function toggleSort() {
   sortAsc = !sortAsc;
   const matches = (allData.equipos || {})[currentTeam] || [];
   renderTable(currentTeam, matches);
+}
+
+
+// ── POINTS TABLE ─────────────────────────────────────────────────────────────
+const POINTS_DATA = [["Marruecos", 49], ["Espa\u00f1a", 48], ["Senegal", 47], ["Inglaterra", 46], ["Jap\u00f3n", 46], ["Argentina", 45], ["Costa de Marfil", 45], ["Noruega", 45], ["RD Congo", 44], ["Argelia", 43], ["Turqu\u00eda", 42], ["Alemania", 42], ["Australia", 40], ["Francia", 40], ["Austria", 40], ["Corea del Sur", 40], ["Uzbekist\u00e1n", 40], ["Canad\u00e1", 40], ["Portugal", 40], ["Croacia", 39], ["Pa\u00edses Bajos", 38], ["Ir\u00e1n", 38], ["M\u00e9xico", 37], ["Hait\u00ed", 37], ["Egipto", 37], ["Panam\u00e1", 36], ["Sud\u00e1frica", 34], ["Rep\u00fablica Checa", 34], ["Irak", 34], ["Brasil", 33], ["Curazao", 33], ["Suecia", 33], ["Cabo Verde", 33], ["T\u00fanez", 33], ["Estados Unidos", 32], ["Nueva Zelanda", 32], ["Ecuador", 31], ["Suiza", 31], ["Paraguay", 30], ["Arabia Saudita", 30], ["Jordania", 30], ["B\u00e9lgica", 30], ["Colombia", 29], ["Escocia", 27], ["Uruguay", 25], ["Bosnia y Herzegovina", 24], ["Ghana", 23], ["Qatar", 20]];
+const FLAG_CODES_MAP = {"Alemania": "de", "Arabia Saudita": "sa", "Argelia": "dz", "Argentina": "ar", "Australia": "au", "Austria": "at", "Bosnia y Herzegovina": "ba", "Brasil": "br", "B\u00e9lgica": "be", "Cabo Verde": "cv", "Canad\u00e1": "ca", "Colombia": "co", "Corea del Sur": "kr", "Costa de Marfil": "ci", "Croacia": "hr", "Curazao": "cw", "Ecuador": "ec", "Egipto": "eg", "Escocia": "gb-sct", "Espa\u00f1a": "es", "Estados Unidos": "us", "Francia": "fr", "Ghana": "gh", "Hait\u00ed": "ht", "Inglaterra": "gb-eng", "Irak": "iq", "Ir\u00e1n": "ir", "Jap\u00f3n": "jp", "Jordania": "jo", "Marruecos": "ma", "M\u00e9xico": "mx", "Noruega": "no", "Nueva Zelanda": "nz", "Panam\u00e1": "pa", "Paraguay": "py", "Pa\u00edses Bajos": "nl", "Portugal": "pt", "Qatar": "qa", "RD Congo": "cd", "Rep\u00fablica Checa": "cz", "Senegal": "sn", "Sud\u00e1frica": "za", "Suecia": "se", "Suiza": "ch", "Turqu\u00eda": "tr", "T\u00fanez": "tn", "Uruguay": "uy", "Uzbekist\u00e1n": "uz"};
+
+let ptsSortAsc = false; // default: highest first
+
+function flagUrl2(name) {
+  const code = FLAG_CODES_MAP[name];
+  return code ? `https://flagcdn.com/w80/${code}.png` : '';
+}
+
+function renderPointsTable() {
+  const sorted = [...POINTS_DATA].sort((a,b) => ptsSortAsc ? a[1]-b[1] : b[1]-a[1]);
+  const max = sorted[0][1];
+  let html = '';
+  sorted.forEach(([name, pts], i) => {
+    const rank = ptsSortAsc ? POINTS_DATA.length - i : i + 1;
+    const flagUrl = flagUrl2(name);
+    const posClass = rank===1?'gold':rank===2?'silver':rank===3?'bronze':'';
+    const barW = Math.round((pts/max)*100);
+    html += `
+    <div class="pts-row">
+      <div class="pts-pos ${posClass}">${rank}</div>
+      <div class="pts-flag">${flagUrl ? `<img src="${flagUrl}" alt="${name}">` : '🏳'}</div>
+      <div class="pts-name">${name}</div>
+      <div class="pts-bar-wrap">
+        <div class="pts-bar-bg"><div class="pts-bar-fill" style="width:${barW}%"></div></div>
+      </div>
+      <div class="pts-score">${pts}</div>
+      <div class="pts-pts-label">PTS</div>
+    </div>`;
+  });
+  document.getElementById('ptsTableWrap').innerHTML = html;
+}
+
+function togglePtsSort() {
+  ptsSortAsc = !ptsSortAsc;
+  document.getElementById('sortIcon').textContent = ptsSortAsc ? '↑' : '↓';
+  document.getElementById('sortLabel').textContent = ptsSortAsc ? 'Menor a mayor' : 'Mayor a menor';
+  renderPointsTable();
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if(tab === 'grid') {
+    document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
+    document.getElementById('mainGrid').style.display = '';
+    document.getElementById('gridControls').style.display = '';
+    document.getElementById('pointsPage').classList.remove('visible');
+  } else {
+    document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+    document.getElementById('mainGrid').style.display = 'none';
+    document.getElementById('gridControls').style.display = 'none';
+    document.getElementById('pointsPage').classList.add('visible');
+    renderPointsTable();
+  }
 }
 
 loadData();
