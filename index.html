@@ -165,7 +165,7 @@ main{padding:28px 32px;max-width:1440px;margin:0 auto;position:relative;z-index:
 
 /* STATS ROW */
 .stats-row{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
   margin-bottom:28px;
 }
 .stat-card{
@@ -817,18 +817,25 @@ function openTeam(teamName) {
   badge.style.background = color + '15';
 
   // Stats
-  let wins=0, draws=0, losses=0, goals=0;
+  let wins=0, draws=0, losses=0;
+  let rankSum=0, rankCount=0;
+  const teamFirst = teamName.toLowerCase().split(' ')[0];
   matches.forEach(m => {
     const res = (m.resultado||'').toLowerCase();
-    const isHome = (m.equipo_local||'').toLowerCase().includes(teamName.toLowerCase().split(' ')[0]);
-    if(res.includes('local') && res.includes('victoria'))         { isHome ? wins++ : losses++; }
-    else if(res.includes('visitante') && res.includes('victoria')){ isHome ? losses++ : wins++; }
+    const isHome = (m.equipo_local||'').toLowerCase().includes(teamFirst);
+    if(res.includes('local') && res.includes('victoria'))          { isHome ? wins++ : losses++; }
+    else if(res.includes('visitante') && res.includes('victoria')) { isHome ? losses++ : wins++; }
     else draws++;
+    // Opponent ranking — pick the rival's ranking (not this team's)
+    const rivalRank = isHome ? m.ranking_visitante : m.ranking_local;
+    if(rivalRank) { rankSum += rivalRank; rankCount++; }
   });
+  const avgRank = rankCount > 0 ? Math.round(rankSum / rankCount) : '—';
   document.getElementById('detailStats').innerHTML = `
     <div class="stat-card"><div class="stat-value" style="color:#22c55e">${wins}</div><div class="stat-label">Victorias</div></div>
     <div class="stat-card"><div class="stat-value" style="color:#eab308">${draws}</div><div class="stat-label">Empates</div></div>
     <div class="stat-card"><div class="stat-value" style="color:#ef4444">${losses}</div><div class="stat-label">Derrotas</div></div>
+    <div class="stat-card"><div class="stat-value">#${avgRank}</div><div class="stat-label">Promedio Ranking FIFA de Rivales</div></div>
   `;
 
   // Table built in renderTable()
