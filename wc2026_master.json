@@ -12494,6 +12494,27 @@
     ],
     "Uruguay": [
       {
+  "seleccion": "Uruguay",
+  "confederacion": "CONMEBOL",
+  "grupo_wc2026": "H",
+  "numero_partido": "1",
+  "fecha": "2024-07-10",
+  "competicion": "Copa América",
+  "equipo_local": "Uruguay",
+  "goles_local": "0",
+  "goles_visitante": "1",
+  "equipo_visitante": "Colombia",
+  "resultado": "Derrota",
+  "estadio": "Bank of America Stadium",
+  "ciudad": "Charlotte, North Carolina, USA",
+  "game_number": "",
+  "match_id": "703951",
+  "fecha_clasif": "2025-09-04",
+  "ranking_local": 17,
+  "ranking_visitante": 13,
+  "es_clasif": false
+},
+      {
         "seleccion": "Uruguay",
         "confederacion": "CONMEBOL",
         "grupo_wc2026": "H",
