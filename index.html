@@ -917,38 +917,43 @@ const WC_QUALIFIER_COMPS = [
 function getRelevancia(teamName, rivalRank, competicion, fecha, isQualMatch=false) {
   const comp = (competicion||'').trim();
   const isFriendly = comp === 'Amistoso Internacional';
-  const teamRank = FIFA_RANK_MAP[teamName] || null;
-
-  // Qualification match is always ALTO regardless of opponent
-  const qualDate = QUAL_DATES_JS[teamName];
-  if(qualDate && qualDate !== 'Anfitrión' && fecha && (fecha === qualDate || isQualMatch)) {
-    return ['rel-alto','ALTO'];
-  }
-
-  // WC Qualifier played AFTER team already qualified → BAJO
   const isWCQual = WC_QUALIFIER_COMPS.includes(comp);
-  if(isWCQual && fecha) {
-    if(qualDate && qualDate !== 'Anfitrión' && fecha > qualDate) {
-      return ['rel-bajo','BAJO'];
-    }
+  const teamRank = FIFA_RANK_MAP[teamName] || null;
+  const qualDate = QUAL_DATES_JS[teamName];
+
+  // Qualification match → always ALTA
+  if(qualDate && qualDate !== 'Anfitrión' && fecha && (fecha === qualDate || isQualMatch)) {
+    return ['rel-alto','ALTA'];
   }
 
-  if(!rivalRank) return ['rel-bajo','BAJO'];
+  // Non-qualifier, non-friendly official competitions → always ALTA
+  // (Copa América, Eurocopa, Nations League, Copa África, Copa Oro, Copa del Golfo, etc.)
+  if(!isFriendly && !isWCQual) {
+    return ['rel-alto','ALTA'];
+  }
 
-  const diff = teamRank ? Math.abs(rivalRank - teamRank) : rivalRank;
+  // Post-qualification WC qualifier → BAJA
+  if(isWCQual && qualDate && qualDate !== 'Anfitrión' && fecha && fecha > qualDate) {
+    return ['rel-bajo','BAJA'];
+  }
+
+  // No ranking → BAJA for friendlies, INTERMEDIA for official
+  if(!rivalRank) {
+    return isFriendly ? ['rel-bajo','BAJA'] : ['rel-inter','INTERMEDIA'];
+  }
+
+  const opponentBetter = teamRank && rivalRank < teamRank;
+  const withinRange = teamRank && Math.abs(rivalRank - teamRank) <= 15;
 
   if(isFriendly) {
-    // Opponent better than you (lower number) → always at least INTERMEDIO
-    // Opponent worse by more than 15 → BAJO
-    const opponentIsBetter = teamRank && rivalRank < teamRank;
-    const opponentWorseByMore = teamRank && (rivalRank - teamRank) > 15;
-    return opponentWorseByMore ? ['rel-bajo','BAJO'] : ['rel-inter','INTERMEDIO'];
+    // INTERMEDIA: opponent better OR within ±15
+    // BAJA: opponent worse by more than 15
+    return (opponentBetter || withinRange) ? ['rel-inter','INTERMEDIA'] : ['rel-bajo','BAJA'];
   } else {
-    // Opponent better than you (lower number) → always at least ALTO
-    // Opponent worse by more than 15 → INTERMEDIO
-    const opponentIsBetter = teamRank && rivalRank < teamRank;
-    const opponentWorseByMore = teamRank && (rivalRank - teamRank) > 15;
-    return opponentWorseByMore ? ['rel-inter','INTERMEDIO'] : ['rel-alto','ALTO'];
+    // Official WC qualifier
+    // ALTA: opponent better OR within ±15
+    // INTERMEDIA: opponent worse by more than 15
+    return (opponentBetter || withinRange) ? ['rel-alto','ALTA'] : ['rel-inter','INTERMEDIA'];
   }
 }
 
@@ -1048,9 +1053,9 @@ function openTeam(teamName) {
     <div class="stat-card"><div class="stat-value">#${avgRank}</div><div class="stat-label">Promedio Ranking FIFA de Rivales</div></div>
     <div class="stat-card"><div class="stat-value" style="color:#06b6d4">${official}</div><div class="stat-label">Competición Oficial</div></div>
     <div class="stat-card"><div class="stat-value" style="color:#94a3b8">${friendlies}</div><div class="stat-label">Amistosos</div></div>
-    <div class="stat-card"><div class="stat-value" style="color:#22c55e">${relAlto}</div><div class="stat-label">Relevancia Alta</div></div>
-    <div class="stat-card"><div class="stat-value" style="color:#eab308">${relInter}</div><div class="stat-label">Relevancia Intermedia</div></div>
-    <div class="stat-card"><div class="stat-value" style="color:#ef4444">${relBajo}</div><div class="stat-label">Relevancia Baja</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#22c55e">${relAlto}</div><div class="stat-label">Relevancia ALTA</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#eab308">${relInter}</div><div class="stat-label">Relevancia INTERMEDIA</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#ef4444">${relBajo}</div><div class="stat-label">Relevancia BAJA</div></div>
   `;
 
   // Table built in renderTable()
