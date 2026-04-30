@@ -265,7 +265,7 @@ footer{
 
   /* POINTS TABLE PAGE */
   #pointsPage{display:none;padding:28px 32px;max-width:900px;margin:0 auto;}
-  #pointsPage.visible{display:block;}
+  #pointsPage.visible{display:block;width:100%;}
   .pts-header{
     display:flex;align-items:center;justify-content:space-between;
     margin-bottom:20px;flex-wrap:wrap;gap:12px;
@@ -319,7 +319,7 @@ footer{
   .rel-bajo   {background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.3);}
 
   /* POINTS TABLE FILTERS */
-  .pts-filters{
+  .pts-filters{padding-left:16px;padding-right:16px;
     display:flex;gap:8px;flex-wrap:wrap;align-items:center;
     padding:14px 0 18px;
   }
@@ -1205,22 +1205,22 @@ function renderPointsTable() {
   const a = (col) => ptsSortCol===col ? arrow : '';
   const ac = (col) => ptsSortCol===col ? 'active-col' : '';
 
-  let t = `<table class="pts-table">
+  let t = `<table class="pts-table" style="table-layout:auto">
   <thead><tr>
-    <th style="width:3%">#</th>
-    <th style="width:3%"></th>
-    <th class="th-left" style="width:10%">Selección</th>
-    <th style="width:8%">Puntos</th>
-    <th class="col-btn ${ac('pts')}" onclick="setPtsFilter('pts')" style="width:4%">PTS${a('pts')}</th>
-    <th class="col-btn ${ac('avg_rank')}" onclick="setPtsFilter('avg_rank')" style="width:7%">Ranking Rivales${a('avg_rank')}</th>
-    <th class="col-btn ${ac('wins')}" onclick="setPtsFilter('wins')" style="width:5%;color:#22c55e">Victorias${a('wins')}</th>
-    <th class="col-btn ${ac('draws')}" onclick="setPtsFilter('draws')" style="width:5%;color:#eab308">Empates${a('draws')}</th>
-    <th class="col-btn ${ac('losses')}" onclick="setPtsFilter('losses')" style="width:5%;color:#ef4444">Derrotas${a('losses')}</th>
-    <th class="col-btn ${ac('rel_alta')}" onclick="setPtsFilter('rel_alta')" style="width:7%;color:#22c55e">Relevancia ALTA${a('rel_alta')}</th>
-    <th class="col-btn ${ac('rel_inter')}" onclick="setPtsFilter('rel_inter')" style="width:8%;color:#eab308">Relevancia INTERMEDIA${a('rel_inter')}</th>
-    <th class="col-btn ${ac('rel_baja')}" onclick="setPtsFilter('rel_baja')" style="width:7%;color:#ef4444">Relevancia BAJA${a('rel_baja')}</th>
-    <th class="col-btn ${ac('official')}" onclick="setPtsFilter('official')" style="width:9%">Competición Oficial${a('official')}</th>
-    <th class="col-btn ${ac('friendly')}" onclick="setPtsFilter('friendly')" style="width:7%">Amistosos${a('friendly')}</th>
+    <th style="min-width:50px">#</th>
+    <th style="min-width:56px"></th>
+    <th class="th-left" style="min-width:150px">Selección</th>
+    <th style="min-width:110px">Puntos</th>
+    <th class="col-btn ${ac('pts')}" onclick="setPtsFilter('pts')" style="min-width:70px">PTS${a('pts')}</th>
+    <th class="col-btn ${ac('avg_rank')}" onclick="setPtsFilter('avg_rank')" style="min-width:110px">Ranking Rivales${a('avg_rank')}</th>
+    <th class="col-btn ${ac('wins')}" onclick="setPtsFilter('wins')" style="min-width:100px;color:#22c55e">Victorias${a('wins')}</th>
+    <th class="col-btn ${ac('draws')}" onclick="setPtsFilter('draws')" style="min-width:100px;color:#eab308">Empates${a('draws')}</th>
+    <th class="col-btn ${ac('losses')}" onclick="setPtsFilter('losses')" style="min-width:100px;color:#ef4444">Derrotas${a('losses')}</th>
+    <th class="col-btn ${ac('rel_alta')}" onclick="setPtsFilter('rel_alta')" style="min-width:110px;color:#22c55e">Relevancia ALTA${a('rel_alta')}</th>
+    <th class="col-btn ${ac('rel_inter')}" onclick="setPtsFilter('rel_inter')" style="min-width:140px;color:#eab308">Relevancia INTERMEDIA${a('rel_inter')}</th>
+    <th class="col-btn ${ac('rel_baja')}" onclick="setPtsFilter('rel_baja')" style="min-width:110px;color:#ef4444">Relevancia BAJA${a('rel_baja')}</th>
+    <th class="col-btn ${ac('official')}" onclick="setPtsFilter('official')" style="min-width:130px">Competición Oficial${a('official')}</th>
+    <th class="col-btn ${ac('friendly')}" onclick="setPtsFilter('friendly')" style="min-width:110px">Amistosos${a('friendly')}</th>
   </tr></thead><tbody>`;
 
   sorted.forEach((name, i) => {
