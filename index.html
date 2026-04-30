@@ -56,10 +56,10 @@ input[type=text]{width:180px}
 input::placeholder{color:var(--text2)}
 
 /* MAIN */
-main{padding:0;width:100%;position:relative;z-index:1}
+main{padding:28px 32px;max-width:1440px;margin:0 auto;position:relative;z-index:1}
 
 /* GROUP SECTIONS */
-.group-section{margin-bottom:36px;padding:0 32px}
+.group-section{margin-bottom:36px}
 .group-label{
   display:inline-flex;align-items:center;gap:8px;
   margin-bottom:14px;
@@ -264,8 +264,8 @@ footer{
   .tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
 
   /* POINTS TABLE PAGE */
-  #pointsPage{display:none;padding:28px 32px;max-width:900px;margin:0 auto;}
-  #pointsPage.visible{display:block;width:100%;}
+  #pointsPage{display:none;padding:28px 32px;}
+  #pointsPage.visible{display:block;}
   .pts-header{
     display:flex;align-items:center;justify-content:space-between;
     margin-bottom:20px;flex-wrap:wrap;gap:12px;
@@ -277,7 +277,7 @@ footer{
     cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;
   }
   .pts-sort-btn:hover{border-color:var(--gold);color:var(--gold);}
-  .pts-table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+  .pts-table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow-x:auto;}
   .pts-row{
     display:flex;align-items:center;gap:16px;
     padding:10px 20px;border-bottom:1px solid rgba(28,38,64,.5);
@@ -373,7 +373,7 @@ footer{
   <input type="text" id="searchInput" placeholder="🔍 Buscar selección..." oninput="applyFilters()">
 </div>
 
-<main id="mainGrid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:0 32px;padding:28px 32px;width:100%;box-sizing:border-box;">
+<main id="mainGrid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:0 32px;">
 
     <div class="group-section" data-group="A">
       <div class="group-label" style="--gc:#3b82f6">
@@ -772,6 +772,8 @@ footer{
           <div class="card-conf">CONCACAF</div>
         </div></div></div>
 
+</div>
+</main>
 <div id="pointsPage">
   <div class="pts-header">
     <div class="pts-title">Tabla de Puntos — Últimos 20 Partidos</div>
@@ -798,8 +800,7 @@ footer{
     </div>
   </div>
   <div class="pts-table-wrap" id="ptsTableWrap"></div>
-</div>
-</main>
+
 
 
 <footer>FIFA World Cup 2026 &nbsp;·&nbsp; Datos: ESPN &nbsp;·&nbsp; Solo partidos oficiales</footer>
@@ -1268,12 +1269,12 @@ function sortPtsBy(col) { setPtsFilter(col); }
 
 function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  const gridEl   = document.getElementById('mainGrid');
-  const ptsEl    = document.getElementById('pointsPage');
-  const ctrlEl   = document.getElementById('gridControls');
+  const gridEl = document.getElementById('mainGrid');
+  const ptsEl  = document.getElementById('pointsPage');
+  const ctrlEl = document.getElementById('gridControls');
   if(tab === 'grid') {
     document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-    gridEl.style.display = 'grid';
+    gridEl.style.display = '';
     ctrlEl.style.display = '';
     ptsEl.style.display  = 'none';
   } else {
