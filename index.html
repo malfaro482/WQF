@@ -1207,7 +1207,7 @@ function renderPointsTable() {
   const a = (col) => ptsSortCol===col ? arrow : '';
   const ac = (col) => ptsSortCol===col ? 'active-col' : '';
 
-  let t = `<table class="pts-table" style="table-layout:auto">
+  let t = `<table class="pts-table" style="table-layout:fixed;width:100%">
   <thead><tr>
     <th style="min-width:50px">#</th>
     <th style="min-width:56px"></th>
