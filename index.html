@@ -335,12 +335,7 @@ footer{
   .pts-chip.active{background:var(--gold);border-color:var(--gold);color:#000;}
   .pts-divider{width:1px;height:24px;background:var(--border);flex-shrink:0;}
 
-  /* EXTRA COLUMNS */
-  .pts-extra-col{width:68px;flex-shrink:0;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:16px;}
-  .pts-extra-col.small{font-size:12px;font-family:'Barlow',sans-serif;font-weight:600;}
-  .pts-extra-header{width:68px;flex-shrink:0;text-align:center;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;transition:color .2s;}
-  .pts-extra-header:hover{color:var(--gold);}
-  .pts-row{flex-wrap:nowrap;}
+
 </style>
 </head>
 <body>
@@ -1205,31 +1200,28 @@ function renderPointsTable() {
     let vb = ENRICHED_DATA[b][ptsSortCol] ?? (ptsSortAsc ? 9999 : -1);
     return ptsSortAsc ? va - vb : vb - va;
   });
-
   const maxPts = Math.max(...names.map(n => ENRICHED_DATA[n].pts));
-  const colLabel = {
-    pts:'PTS', wins:'Victorias', draws:'Empates', losses:'Derrotas',
-    rel_alta:'Rel. ALTA', rel_inter:'Rel. INTER', rel_baja:'Rel. BAJA',
-    official:'Oficial', friendly:'Amistosos', avg_rank:'Ranking Rivales'
-  };
-  const arrow = ptsSortAsc ? '↑' : '↓';
+  const arrow = ptsSortAsc ? ' ↑' : ' ↓';
+  const a = (col) => ptsSortCol===col ? arrow : '';
+  const ac = (col) => ptsSortCol===col ? 'active-col' : '';
 
-  let html2 = '';
-  // Header
-  html2 += `<div class="pts-row pts-header-row">
-    <div class="pts-pos" style="color:var(--text2);font-size:10px;font-family:'Barlow',sans-serif;font-weight:700;letter-spacing:1px">#</div>
-    <div class="pts-flag"></div>
-    <div class="pts-name" style="font-size:10px;color:var(--text2);font-weight:700;letter-spacing:1px;text-transform:uppercase">Selección</div>
-    <div class="pts-bar-wrap" style="font-size:10px;color:var(--text2);font-weight:700;letter-spacing:1px;text-transform:uppercase">Puntos</div>
-    <div class="pts-score pts-col-btn" onclick="setPtsFilter('pts')" style="font-size:10px;font-weight:700;letter-spacing:1px;font-family:'Barlow',sans-serif;text-transform:uppercase;cursor:pointer">PTS ${ptsSortCol==='pts'?arrow:''}</div>
-    <div class="pts-extra-header pts-col-btn" onclick="setPtsFilter('avg_rank')" style="color:var(--text2)">Ranking Rivales ${ptsSortCol==='avg_rank'?arrow:''}</div>
-    <div class="pts-extra-header pts-col-btn" onclick="setPtsFilter('wins')" style="color:#22c55e">V ${ptsSortCol==='wins'?arrow:''}</div>
-    <div class="pts-extra-header pts-col-btn" onclick="setPtsFilter('draws')" style="color:#eab308">E ${ptsSortCol==='draws'?arrow:''}</div>
-    <div class="pts-extra-header pts-col-btn" onclick="setPtsFilter('losses')" style="color:#ef4444">D ${ptsSortCol==='losses'?arrow:''}</div>
-    <div class="pts-extra-header pts-col-btn" onclick="setPtsFilter('rel_alta')" style="color:#22c55e">Alta ${ptsSortCol==='rel_alta'?arrow:''}</div>
-    <div class="pts-extra-header pts-col-btn" onclick="setPtsFilter('rel_inter')" style="color:#eab308">Inter ${ptsSortCol==='rel_inter'?arrow:''}</div>
-    <div class="pts-extra-header pts-col-btn" onclick="setPtsFilter('rel_baja')" style="color:#ef4444">Baja ${ptsSortCol==='rel_baja'?arrow:''}</div>
-  </div>`;
+  let t = `<table class="pts-table">
+  <thead><tr>
+    <th class="${ac('pos')}" style="width:40px">#</th>
+    <th style="width:44px"></th>
+    <th class="th-left ${ac('name')}" style="min-width:130px">Selección</th>
+    <th style="min-width:90px">Puntos</th>
+    <th class="col-btn ${ac('pts')}" onclick="setPtsFilter('pts')" style="width:52px">PTS${a('pts')}</th>
+    <th class="col-btn ${ac('avg_rank')}" onclick="setPtsFilter('avg_rank')" style="width:90px">Ranking<br>Rivales${a('avg_rank')}</th>
+    <th class="col-btn ${ac('wins')}" onclick="setPtsFilter('wins')" style="width:52px;color:#22c55e">V${a('wins')}</th>
+    <th class="col-btn ${ac('draws')}" onclick="setPtsFilter('draws')" style="width:52px;color:#eab308">E${a('draws')}</th>
+    <th class="col-btn ${ac('losses')}" onclick="setPtsFilter('losses')" style="width:52px;color:#ef4444">D${a('losses')}</th>
+    <th class="col-btn ${ac('rel_alta')}" onclick="setPtsFilter('rel_alta')" style="width:60px;color:#22c55e">Rel.<br>ALTA${a('rel_alta')}</th>
+    <th class="col-btn ${ac('rel_inter')}" onclick="setPtsFilter('rel_inter')" style="width:60px;color:#eab308">Rel.<br>INTER${a('rel_inter')}</th>
+    <th class="col-btn ${ac('rel_baja')}" onclick="setPtsFilter('rel_baja')" style="width:60px;color:#ef4444">Rel.<br>BAJA${a('rel_baja')}</th>
+    <th class="col-btn ${ac('official')}" onclick="setPtsFilter('official')" style="width:60px">Comp.<br>Oficial${a('official')}</th>
+    <th class="col-btn ${ac('friendly')}" onclick="setPtsFilter('friendly')" style="width:60px">Amis-<br>tosos${a('friendly')}</th>
+  </tr></thead><tbody>`;
 
   sorted.forEach((name, i) => {
     const d = ENRICHED_DATA[name];
@@ -1237,26 +1229,27 @@ function renderPointsTable() {
     const flagUrl = flagUrl2(name);
     const posClass = rank===1?'gold':rank===2?'silver':rank===3?'bronze':'';
     const barW = Math.round((d.pts / maxPts) * 100);
-    const avgDisplay = d.avg_rank ? `#${d.avg_rank}` : '—';
-    html2 += `
-    <div class="pts-row">
-      <div class="pts-pos ${posClass}">${rank}</div>
-      <div class="pts-flag">${flagUrl ? `<img src="${flagUrl}" alt="${name}">` : '🏳'}</div>
-      <div class="pts-name">${name}</div>
-      <div class="pts-bar-wrap">
-        <div class="pts-bar-bg"><div class="pts-bar-fill" style="width:${barW}%"></div></div>
-      </div>
-      <div class="pts-score" style="${ptsSortCol==='pts'?'color:var(--gold)':''}">${d.pts}</div>
-      <div class="pts-avg-col" style="${ptsSortCol==='avg_rank'?'color:var(--gold)':''}">${avgDisplay}</div>
-      <div class="pts-extra-col" style="color:#22c55e${ptsSortCol==='wins'?';font-size:20px':''}">${d.wins}</div>
-      <div class="pts-extra-col" style="color:#eab308${ptsSortCol==='draws'?';font-size:20px':''}">${d.draws}</div>
-      <div class="pts-extra-col" style="color:#ef4444${ptsSortCol==='losses'?';font-size:20px':''}">${d.losses}</div>
-      <div class="pts-extra-col" style="color:#22c55e${ptsSortCol==='rel_alta'?';font-size:20px':''}">${d.rel_alta}</div>
-      <div class="pts-extra-col" style="color:#eab308${ptsSortCol==='rel_inter'?';font-size:20px':''}">${d.rel_inter}</div>
-      <div class="pts-extra-col" style="color:#ef4444${ptsSortCol==='rel_baja'?';font-size:20px':''}">${d.rel_baja}</div>
-    </div>`;
+    const avgDisplay = d.avg_rank ? '#'+d.avg_rank : '—';
+    const hl = (col, color) => ptsSortCol===col ? `color:${color};font-size:20px` : `color:${color}`;
+    t += `<tr>
+      <td class="pts-pos ${posClass}" style="text-align:center">${rank}</td>
+      <td class="pts-flag-cell"><div class="pts-flag">${flagUrl?`<img src="${flagUrl}" alt="${name}">`:'🏳'}</div></td>
+      <td class="pts-name-cell">${name}</td>
+      <td class="pts-bar-cell"><div class="pts-bar-bg"><div class="pts-bar-fill" style="width:${barW}%"></div></div></td>
+      <td style="${hl('pts','var(--gold)')}">${d.pts}</td>
+      <td style="${hl('avg_rank','var(--text2)')}">${avgDisplay}</td>
+      <td style="${hl('wins','#22c55e')}">${d.wins}</td>
+      <td style="${hl('draws','#eab308')}">${d.draws}</td>
+      <td style="${hl('losses','#ef4444')}">${d.losses}</td>
+      <td style="${hl('rel_alta','#22c55e')}">${d.rel_alta}</td>
+      <td style="${hl('rel_inter','#eab308')}">${d.rel_inter}</td>
+      <td style="${hl('rel_baja','#ef4444')}">${d.rel_baja}</td>
+      <td style="${hl('official','var(--text2)')}">${d.official}</td>
+      <td style="${hl('friendly','var(--text2)')}">${d.friendly}</td>
+    </tr>`;
   });
-  document.getElementById('ptsTableWrap').innerHTML = html2;
+  t += '</tbody></table>';
+  document.getElementById('ptsTableWrap').innerHTML = t;
 }
 
 
