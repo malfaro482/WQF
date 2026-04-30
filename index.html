@@ -1207,20 +1207,20 @@ function renderPointsTable() {
 
   let t = `<table class="pts-table">
   <thead><tr>
-    <th class="${ac('pos')}" style="width:40px">#</th>
-    <th style="width:44px"></th>
-    <th class="th-left ${ac('name')}" style="min-width:130px">Selección</th>
-    <th style="min-width:90px">Puntos</th>
-    <th class="col-btn ${ac('pts')}" onclick="setPtsFilter('pts')" style="width:48px">PTS${a('pts')}</th>
-    <th class="col-btn ${ac('avg_rank')}" onclick="setPtsFilter('avg_rank')" style="width:80px">Ranking<br>Rivales${a('avg_rank')}</th>
-    <th class="col-btn ${ac('wins')}" onclick="setPtsFilter('wins')" style="width:44px;color:#22c55e">V${a('wins')}</th>
-    <th class="col-btn ${ac('draws')}" onclick="setPtsFilter('draws')" style="width:44px;color:#eab308">E${a('draws')}</th>
-    <th class="col-btn ${ac('losses')}" onclick="setPtsFilter('losses')" style="width:44px;color:#ef4444">D${a('losses')}</th>
-    <th class="col-btn ${ac('rel_alta')}" onclick="setPtsFilter('rel_alta')" style="width:58px;color:#22c55e">Rel.<br>ALTA${a('rel_alta')}</th>
-    <th class="col-btn ${ac('rel_inter')}" onclick="setPtsFilter('rel_inter')" style="width:58px;color:#eab308">Rel.<br>INTER${a('rel_inter')}</th>
-    <th class="col-btn ${ac('rel_baja')}" onclick="setPtsFilter('rel_baja')" style="width:58px;color:#ef4444">Rel.<br>BAJA${a('rel_baja')}</th>
-    <th class="col-btn ${ac('official')}" onclick="setPtsFilter('official')" style="width:68px">Comp.<br>Oficial${a('official')}</th>
-    <th class="col-btn ${ac('friendly')}" onclick="setPtsFilter('friendly')" style="width:68px">Amis-<br>tosos${a('friendly')}</th>
+    <th style="width:3%">#</th>
+    <th style="width:3%"></th>
+    <th class="th-left" style="width:10%">Selección</th>
+    <th style="width:8%">Puntos</th>
+    <th class="col-btn ${ac('pts')}" onclick="setPtsFilter('pts')" style="width:4%">PTS${a('pts')}</th>
+    <th class="col-btn ${ac('avg_rank')}" onclick="setPtsFilter('avg_rank')" style="width:7%">Ranking Rivales${a('avg_rank')}</th>
+    <th class="col-btn ${ac('wins')}" onclick="setPtsFilter('wins')" style="width:5%;color:#22c55e">Victorias${a('wins')}</th>
+    <th class="col-btn ${ac('draws')}" onclick="setPtsFilter('draws')" style="width:5%;color:#eab308">Empates${a('draws')}</th>
+    <th class="col-btn ${ac('losses')}" onclick="setPtsFilter('losses')" style="width:5%;color:#ef4444">Derrotas${a('losses')}</th>
+    <th class="col-btn ${ac('rel_alta')}" onclick="setPtsFilter('rel_alta')" style="width:7%;color:#22c55e">Relevancia ALTA${a('rel_alta')}</th>
+    <th class="col-btn ${ac('rel_inter')}" onclick="setPtsFilter('rel_inter')" style="width:8%;color:#eab308">Relevancia INTERMEDIA${a('rel_inter')}</th>
+    <th class="col-btn ${ac('rel_baja')}" onclick="setPtsFilter('rel_baja')" style="width:7%;color:#ef4444">Relevancia BAJA${a('rel_baja')}</th>
+    <th class="col-btn ${ac('official')}" onclick="setPtsFilter('official')" style="width:9%">Competición Oficial${a('official')}</th>
+    <th class="col-btn ${ac('friendly')}" onclick="setPtsFilter('friendly')" style="width:7%">Amistosos${a('friendly')}</th>
   </tr></thead><tbody>`;
 
   sorted.forEach((name, i) => {
