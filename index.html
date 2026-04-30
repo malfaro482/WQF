@@ -1259,4 +1259,43 @@ function renderPointsTable() {
   document.getElementById('ptsTableWrap').innerHTML = html2;
 }
 
->
+
+function setPtsFilter(col) {
+  if(ptsSortCol === col) { ptsSortAsc = !ptsSortAsc; }
+  else { ptsSortCol = col; ptsSortAsc = col === 'avg_rank'; }
+  document.querySelectorAll('.pts-chip').forEach(c => {
+    const m = c.getAttribute('onclick').match(/'([^']+)'/);
+    if(m) c.classList.toggle('active', m[1] === col);
+  });
+  renderPointsTable();
+}
+
+function sortPtsBy(col) { setPtsFilter(col); }
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if(tab === 'grid') {
+    document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
+    document.getElementById('mainGrid').style.display = '';
+    document.getElementById('gridControls').style.display = '';
+    document.getElementById('pointsPage').classList.remove('visible');
+  } else {
+    document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+    document.getElementById('mainGrid').style.display = 'none';
+    document.getElementById('gridControls').style.display = 'none';
+    document.getElementById('pointsPage').classList.add('visible');
+    renderPointsTable();
+  }
+}
+
+function toggleSort() {
+  if(!currentTeam || !allData) return;
+  sortAsc = !sortAsc;
+  const matches = (allData.equipos || {})[currentTeam] || [];
+  renderTable(currentTeam, matches);
+}
+
+loadData();
+</script>
+</body>
+</html>
