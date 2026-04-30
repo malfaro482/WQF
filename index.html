@@ -317,6 +317,30 @@ footer{
   .rel-alto   {background:rgba(34,197,94,.15);color:#22c55e;border:1px solid rgba(34,197,94,.3);}
   .rel-inter  {background:rgba(234,179,8,.15);color:#eab308;border:1px solid rgba(234,179,8,.3);}
   .rel-bajo   {background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.3);}
+
+  /* POINTS TABLE FILTERS */
+  .pts-filters{
+    display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+    padding:14px 0 18px;
+  }
+  .pts-filter-group{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+  .pts-filter-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text2);white-space:nowrap;}
+  .pts-chip{
+    background:var(--surface2);border:1px solid var(--border);
+    color:var(--text2);font-size:11px;font-weight:600;font-family:'Barlow',sans-serif;
+    padding:5px 12px;border-radius:20px;cursor:pointer;transition:all .2s;
+    white-space:nowrap;
+  }
+  .pts-chip:hover{border-color:var(--gold);color:var(--gold);}
+  .pts-chip.active{background:var(--gold);border-color:var(--gold);color:#000;}
+  .pts-divider{width:1px;height:24px;background:var(--border);flex-shrink:0;}
+
+  /* EXTRA COLUMNS */
+  .pts-extra-col{width:68px;flex-shrink:0;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:16px;}
+  .pts-extra-col.small{font-size:12px;font-family:'Barlow',sans-serif;font-weight:600;}
+  .pts-extra-header{width:68px;flex-shrink:0;text-align:center;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;transition:color .2s;}
+  .pts-extra-header:hover{color:var(--gold);}
+  .pts-row{flex-wrap:nowrap;}
 </style>
 </head>
 <body>
@@ -758,6 +782,27 @@ footer{
   <div class="pts-header">
     <div class="pts-title">Tabla de Puntos — Últimos 20 Partidos</div>
   </div>
+  <div class="pts-filters">
+    <span class="pts-filter-label">Ordenar por</span>
+    <div class="pts-filter-group">
+      <button class="pts-chip active" onclick="setPtsFilter('pts')">Puntos</button>
+      <button class="pts-chip" onclick="setPtsFilter('wins')">Victorias</button>
+      <button class="pts-chip" onclick="setPtsFilter('draws')">Empates</button>
+      <button class="pts-chip" onclick="setPtsFilter('losses')">Derrotas</button>
+    </div>
+    <div class="pts-divider"></div>
+    <div class="pts-filter-group">
+      <button class="pts-chip" onclick="setPtsFilter('rel_alta')">Relevancia ALTA</button>
+      <button class="pts-chip" onclick="setPtsFilter('rel_inter')">Relevancia INTERMEDIA</button>
+      <button class="pts-chip" onclick="setPtsFilter('rel_baja')">Relevancia BAJA</button>
+    </div>
+    <div class="pts-divider"></div>
+    <div class="pts-filter-group">
+      <button class="pts-chip" onclick="setPtsFilter('official')">Competición Oficial</button>
+      <button class="pts-chip" onclick="setPtsFilter('friendly')">Amistosos</button>
+      <button class="pts-chip" onclick="setPtsFilter('avg_rank')">Ranking Rivales</button>
+    </div>
+  </div>
   <div class="pts-table-wrap" id="ptsTableWrap"></div>
 </div>
 
@@ -1141,11 +1186,12 @@ function toggleSort() {
 
 
 // ── POINTS TABLE ─────────────────────────────────────────────────────────────
+const ENRICHED_DATA = {"Corea del Sur": {"pts": 40, "avg_rank": 69, "wins": 12, "draws": 5, "losses": 3, "rel_alta": 1, "rel_inter": 16, "rel_baja": 3, "official": 12, "friendly": 8}, "México": {"pts": 37, "avg_rank": 44, "wins": 10, "draws": 7, "losses": 3, "rel_alta": 7, "rel_inter": 9, "rel_baja": 4, "official": 7, "friendly": 13}, "República Checa": {"pts": 34, "avg_rank": 88, "wins": 11, "draws": 6, "losses": 3, "rel_alta": 9, "rel_inter": 7, "rel_baja": 4, "official": 16, "friendly": 4}, "Sudáfrica": {"pts": 34, "avg_rank": 90, "wins": 8, "draws": 7, "losses": 5, "rel_alta": 12, "rel_inter": 5, "rel_baja": 3, "official": 15, "friendly": 5}, "Bosnia y Herzegovina": {"pts": 24, "avg_rank": 62, "wins": 6, "draws": 6, "losses": 8, "rel_alta": 12, "rel_inter": 7, "rel_baja": 1, "official": 16, "friendly": 4}, "Canadá": {"pts": 40, "avg_rank": 57, "wins": 11, "draws": 7, "losses": 2, "rel_alta": 8, "rel_inter": 8, "rel_baja": 4, "official": 8, "friendly": 12}, "Qatar": {"pts": 20, "avg_rank": 84, "wins": 5, "draws": 6, "losses": 9, "rel_alta": 10, "rel_inter": 7, "rel_baja": 3, "official": 16, "friendly": 4}, "Suiza": {"pts": 31, "avg_rank": 42, "wins": 8, "draws": 7, "losses": 5, "rel_alta": 8, "rel_inter": 9, "rel_baja": 3, "official": 13, "friendly": 7}, "Brasil": {"pts": 33, "avg_rank": 29, "wins": 9, "draws": 6, "losses": 5, "rel_alta": 6, "rel_inter": 10, "rel_baja": 4, "official": 14, "friendly": 6}, "Escocia": {"pts": 27, "avg_rank": 57, "wins": 9, "draws": 3, "losses": 8, "rel_alta": 12, "rel_inter": 4, "rel_baja": 4, "official": 14, "friendly": 6}, "Haití": {"pts": 37, "avg_rank": 104, "wins": 11, "draws": 4, "losses": 5, "rel_alta": 15, "rel_inter": 4, "rel_baja": 1, "official": 17, "friendly": 3}, "Marruecos": {"pts": 49, "avg_rank": 79, "wins": 16, "draws": 3, "losses": 1, "rel_alta": 13, "rel_inter": 1, "rel_baja": 6, "official": 15, "friendly": 5}, "Australia": {"pts": 40, "avg_rank": 73, "wins": 12, "draws": 4, "losses": 4, "rel_alta": 3, "rel_inter": 12, "rel_baja": 5, "official": 12, "friendly": 8}, "Estados Unidos": {"pts": 32, "avg_rank": 39, "wins": 10, "draws": 2, "losses": 8, "rel_alta": 8, "rel_inter": 9, "rel_baja": 3, "official": 8, "friendly": 12}, "Paraguay": {"pts": 30, "avg_rank": 26, "wins": 8, "draws": 6, "losses": 6, "rel_alta": 12, "rel_inter": 7, "rel_baja": 1, "official": 14, "friendly": 6}, "Turquía": {"pts": 42, "avg_rank": 49, "wins": 13, "draws": 3, "losses": 4, "rel_alta": 13, "rel_inter": 7, "rel_baja": 0, "official": 18, "friendly": 2}, "Alemania": {"pts": 42, "avg_rank": 41, "wins": 12, "draws": 4, "losses": 4, "rel_alta": 12, "rel_inter": 6, "rel_baja": 2, "official": 17, "friendly": 3}, "Costa de Marfil": {"pts": 45, "avg_rank": 83, "wins": 13, "draws": 3, "losses": 4, "rel_alta": 8, "rel_inter": 8, "rel_baja": 4, "official": 13, "friendly": 7}, "Curazao": {"pts": 33, "avg_rank": 112, "wins": 9, "draws": 6, "losses": 5, "rel_alta": 12, "rel_inter": 7, "rel_baja": 1, "official": 17, "friendly": 3}, "Ecuador": {"pts": 31, "avg_rank": 29, "wins": 6, "draws": 13, "losses": 1, "rel_alta": 7, "rel_inter": 10, "rel_baja": 3, "official": 14, "friendly": 6}, "Japón": {"pts": 46, "avg_rank": 65, "wins": 14, "draws": 4, "losses": 2, "rel_alta": 2, "rel_inter": 11, "rel_baja": 7, "official": 12, "friendly": 8}, "Países Bajos": {"pts": 38, "avg_rank": 60, "wins": 11, "draws": 8, "losses": 1, "rel_alta": 11, "rel_inter": 7, "rel_baja": 2, "official": 18, "friendly": 2}, "Suecia": {"pts": 33, "avg_rank": 64, "wins": 10, "draws": 3, "losses": 7, "rel_alta": 10, "rel_inter": 8, "rel_baja": 2, "official": 14, "friendly": 6}, "Túnez": {"pts": 33, "avg_rank": 92, "wins": 12, "draws": 5, "losses": 3, "rel_alta": 7, "rel_inter": 6, "rel_baja": 7, "official": 12, "friendly": 8}, "Bélgica": {"pts": 30, "avg_rank": 60, "wins": 9, "draws": 5, "losses": 6, "rel_alta": 10, "rel_inter": 9, "rel_baja": 1, "official": 17, "friendly": 3}, "Egipto": {"pts": 37, "avg_rank": 78, "wins": 11, "draws": 6, "losses": 3, "rel_alta": 10, "rel_inter": 6, "rel_baja": 4, "official": 15, "friendly": 5}, "Irán": {"pts": 38, "avg_rank": 81, "wins": 12, "draws": 5, "losses": 3, "rel_alta": 1, "rel_inter": 13, "rel_baja": 6, "official": 14, "friendly": 6}, "Nueva Zelanda": {"pts": 32, "avg_rank": 70, "wins": 8, "draws": 3, "losses": 9, "rel_alta": 1, "rel_inter": 18, "rel_baja": 1, "official": 5, "friendly": 15}, "Arabia Saudita": {"pts": 30, "avg_rank": 63, "wins": 9, "draws": 4, "losses": 7, "rel_alta": 9, "rel_inter": 10, "rel_baja": 1, "official": 12, "friendly": 8}, "Cabo Verde": {"pts": 33, "avg_rank": 96, "wins": 7, "draws": 7, "losses": 6, "rel_alta": 9, "rel_inter": 9, "rel_baja": 2, "official": 13, "friendly": 7}, "España": {"pts": 48, "avg_rank": 31, "wins": 14, "draws": 6, "losses": 0, "rel_alta": 13, "rel_inter": 5, "rel_baja": 2, "official": 18, "friendly": 2}, "Uruguay": {"pts": 25, "avg_rank": 38, "wins": 5, "draws": 10, "losses": 5, "rel_alta": 7, "rel_inter": 10, "rel_baja": 3, "official": 14, "friendly": 6}, "Francia": {"pts": 40, "avg_rank": 36, "wins": 14, "draws": 3, "losses": 3, "rel_alta": 13, "rel_inter": 6, "rel_baja": 1, "official": 18, "friendly": 2}, "Irak": {"pts": 34, "avg_rank": 85, "wins": 10, "draws": 5, "losses": 5, "rel_alta": 11, "rel_inter": 9, "rel_baja": 0, "official": 20, "friendly": 0}, "Noruega": {"pts": 45, "avg_rank": 71, "wins": 14, "draws": 3, "losses": 3, "rel_alta": 8, "rel_inter": 9, "rel_baja": 3, "official": 14, "friendly": 6}, "Senegal": {"pts": 47, "avg_rank": 75, "wins": 14, "draws": 4, "losses": 2, "rel_alta": 13, "rel_inter": 4, "rel_baja": 3, "official": 16, "friendly": 4}, "Argelia": {"pts": 43, "avg_rank": 94, "wins": 13, "draws": 6, "losses": 1, "rel_alta": 11, "rel_inter": 3, "rel_baja": 6, "official": 14, "friendly": 6}, "Argentina": {"pts": 45, "avg_rank": 51, "wins": 14, "draws": 3, "losses": 3, "rel_alta": 6, "rel_inter": 5, "rel_baja": 9, "official": 15, "friendly": 5}, "Austria": {"pts": 40, "avg_rank": 78, "wins": 12, "draws": 4, "losses": 4, "rel_alta": 10, "rel_inter": 9, "rel_baja": 1, "official": 17, "friendly": 3}, "Jordania": {"pts": 30, "avg_rank": 73, "wins": 5, "draws": 9, "losses": 6, "rel_alta": 4, "rel_inter": 13, "rel_baja": 3, "official": 10, "friendly": 10}, "Colombia": {"pts": 29, "avg_rank": 32, "wins": 8, "draws": 5, "losses": 7, "rel_alta": 8, "rel_inter": 9, "rel_baja": 3, "official": 14, "friendly": 6}, "Portugal": {"pts": 40, "avg_rank": 37, "wins": 11, "draws": 7, "losses": 2, "rel_alta": 13, "rel_inter": 7, "rel_baja": 0, "official": 18, "friendly": 2}, "RD Congo": {"pts": 44, "avg_rank": 77, "wins": 14, "draws": 2, "losses": 4, "rel_alta": 12, "rel_inter": 5, "rel_baja": 3, "official": 16, "friendly": 4}, "Uzbekistán": {"pts": 40, "avg_rank": 75, "wins": 11, "draws": 7, "losses": 2, "rel_alta": 5, "rel_inter": 12, "rel_baja": 3, "official": 14, "friendly": 6}, "Croacia": {"pts": 39, "avg_rank": 58, "wins": 13, "draws": 3, "losses": 4, "rel_alta": 9, "rel_inter": 9, "rel_baja": 2, "official": 16, "friendly": 4}, "Ghana": {"pts": 23, "avg_rank": 83, "wins": 6, "draws": 5, "losses": 9, "rel_alta": 10, "rel_inter": 9, "rel_baja": 1, "official": 14, "friendly": 6}, "Inglaterra": {"pts": 46, "avg_rank": 65, "wins": 15, "draws": 2, "losses": 3, "rel_alta": 9, "rel_inter": 8, "rel_baja": 3, "official": 16, "friendly": 4}, "Panamá": {"pts": 36, "avg_rank": 81, "wins": 10, "draws": 7, "losses": 3, "rel_alta": 8, "rel_inter": 8, "rel_baja": 4, "official": 15, "friendly": 5}};
 const POINTS_DATA = [["Marruecos", 49, 79], ["España", 48, 31], ["Senegal", 47, 75], ["Inglaterra", 46, 65], ["Japón", 46, 65], ["Argentina", 45, 51], ["Costa de Marfil", 45, 83], ["Noruega", 45, 71], ["RD Congo", 44, 77], ["Argelia", 43, 94], ["Turquía", 42, 49], ["Alemania", 42, 41], ["Australia", 40, 73], ["Francia", 40, 36], ["Austria", 40, 78], ["Corea del Sur", 40, 69], ["Uzbekistán", 40, 75], ["Canadá", 40, 57], ["Portugal", 40, 37], ["Croacia", 39, 58], ["Países Bajos", 38, 60], ["Irán", 38, 81], ["México", 37, 44], ["Haití", 37, 104], ["Egipto", 37, 78], ["Panamá", 36, 81], ["Sudáfrica", 34, 90], ["República Checa", 34, 88], ["Irak", 34, 85], ["Brasil", 33, 29], ["Curazao", 33, 112], ["Suecia", 33, 64], ["Cabo Verde", 33, 96], ["Túnez", 33, 92], ["Estados Unidos", 32, 39], ["Nueva Zelanda", 32, 70], ["Ecuador", 31, 29], ["Suiza", 31, 42], ["Paraguay", 30, 26], ["Arabia Saudita", 30, 63], ["Jordania", 30, 73], ["Bélgica", 30, 60], ["Colombia", 29, 32], ["Escocia", 27, 57], ["Uruguay", 25, 38], ["Bosnia y Herzegovina", 24, 62], ["Ghana", 23, 83], ["Qatar", 20, 84]];
 const FLAG_CODES_MAP = {"Alemania": "de", "Arabia Saudita": "sa", "Argelia": "dz", "Argentina": "ar", "Australia": "au", "Austria": "at", "Bosnia y Herzegovina": "ba", "Brasil": "br", "B\u00e9lgica": "be", "Cabo Verde": "cv", "Canad\u00e1": "ca", "Colombia": "co", "Corea del Sur": "kr", "Costa de Marfil": "ci", "Croacia": "hr", "Curazao": "cw", "Ecuador": "ec", "Egipto": "eg", "Escocia": "gb-sct", "Espa\u00f1a": "es", "Estados Unidos": "us", "Francia": "fr", "Ghana": "gh", "Hait\u00ed": "ht", "Inglaterra": "gb-eng", "Irak": "iq", "Ir\u00e1n": "ir", "Jap\u00f3n": "jp", "Jordania": "jo", "Marruecos": "ma", "M\u00e9xico": "mx", "Noruega": "no", "Nueva Zelanda": "nz", "Panam\u00e1": "pa", "Paraguay": "py", "Pa\u00edses Bajos": "nl", "Portugal": "pt", "Qatar": "qa", "RD Congo": "cd", "Rep\u00fablica Checa": "cz", "Senegal": "sn", "Sud\u00e1frica": "za", "Suecia": "se", "Suiza": "ch", "Turqu\u00eda": "tr", "T\u00fanez": "tn", "Uruguay": "uy", "Uzbekist\u00e1n": "uz"};
 
-let ptsSortCol = 'pts'; // 'pts' or 'avg'
-let ptsSortAsc = false; // false = highest first
+let ptsSortCol = 'pts';
+let ptsSortAsc = false;
 
 function flagUrl2(name) {
   const code = FLAG_CODES_MAP[name];
@@ -1153,31 +1199,46 @@ function flagUrl2(name) {
 }
 
 function renderPointsTable() {
-  const sorted = [...POINTS_DATA].sort((a,b) => {
-    const valA = ptsSortCol === 'pts' ? a[1] : (a[2] || 999);
-    const valB = ptsSortCol === 'pts' ? b[1] : (b[2] || 999);
-    return ptsSortAsc ? valA - valB : valB - valA;
+  const names = Object.keys(ENRICHED_DATA);
+  const sorted = [...names].sort((a,b) => {
+    let va = ENRICHED_DATA[a][ptsSortCol] ?? (ptsSortAsc ? 9999 : -1);
+    let vb = ENRICHED_DATA[b][ptsSortCol] ?? (ptsSortAsc ? 9999 : -1);
+    return ptsSortAsc ? va - vb : vb - va;
   });
-  const max = sorted[0][1];
-  let html = '';
-  // Header row
-  const ptsArrow = ptsSortCol==='pts' ? (ptsSortAsc?'↑':'↓') : '';
-  const avgArrow = ptsSortCol==='avg' ? (ptsSortAsc?'↑':'↓') : '';
-  html += `<div class="pts-row pts-header-row">
+
+  const maxPts = Math.max(...names.map(n => ENRICHED_DATA[n].pts));
+  const colLabel = {
+    pts:'PTS', wins:'Victorias', draws:'Empates', losses:'Derrotas',
+    rel_alta:'Rel. ALTA', rel_inter:'Rel. INTER', rel_baja:'Rel. BAJA',
+    official:'Oficial', friendly:'Amistosos', avg_rank:'Ranking Rivales'
+  };
+  const arrow = ptsSortAsc ? '↑' : '↓';
+
+  let html2 = '';
+  // Header
+  html2 += `<div class="pts-row pts-header-row">
     <div class="pts-pos" style="color:var(--text2);font-size:10px;font-family:'Barlow',sans-serif;font-weight:700;letter-spacing:1px">#</div>
     <div class="pts-flag"></div>
     <div class="pts-name" style="font-size:10px;color:var(--text2);font-weight:700;letter-spacing:1px;text-transform:uppercase">Selección</div>
     <div class="pts-bar-wrap" style="font-size:10px;color:var(--text2);font-weight:700;letter-spacing:1px;text-transform:uppercase">Puntos</div>
-    <div class="pts-score pts-col-btn" onclick="sortPtsBy('pts')" style="font-size:10px;font-weight:700;letter-spacing:1px;font-family:'Barlow',sans-serif;text-transform:uppercase;cursor:pointer" title="Ordenar por puntos">PTS ${ptsArrow}</div>
-    <div class="pts-avg-col pts-col-btn" onclick="sortPtsBy('avg')" style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer" title="Ordenar por ranking de rivales">Promedio Ranking de Rivales ${avgArrow}</div>
+    <div class="pts-score pts-col-btn" onclick="setPtsFilter('pts')" style="font-size:10px;font-weight:700;letter-spacing:1px;font-family:'Barlow',sans-serif;text-transform:uppercase;cursor:pointer">PTS ${ptsSortCol==='pts'?arrow:''}</div>
+    <div class="pts-extra-header pts-col-btn" onclick="setPtsFilter('avg_rank')" style="color:var(--text2)">Ranking Rivales ${ptsSortCol==='avg_rank'?arrow:''}</div>
+    <div class="pts-extra-header pts-col-btn" onclick="setPtsFilter('wins')" style="color:#22c55e">V ${ptsSortCol==='wins'?arrow:''}</div>
+    <div class="pts-extra-header pts-col-btn" onclick="setPtsFilter('draws')" style="color:#eab308">E ${ptsSortCol==='draws'?arrow:''}</div>
+    <div class="pts-extra-header pts-col-btn" onclick="setPtsFilter('losses')" style="color:#ef4444">D ${ptsSortCol==='losses'?arrow:''}</div>
+    <div class="pts-extra-header pts-col-btn" onclick="setPtsFilter('rel_alta')" style="color:#22c55e">Alta ${ptsSortCol==='rel_alta'?arrow:''}</div>
+    <div class="pts-extra-header pts-col-btn" onclick="setPtsFilter('rel_inter')" style="color:#eab308">Inter ${ptsSortCol==='rel_inter'?arrow:''}</div>
+    <div class="pts-extra-header pts-col-btn" onclick="setPtsFilter('rel_baja')" style="color:#ef4444">Baja ${ptsSortCol==='rel_baja'?arrow:''}</div>
   </div>`;
-  sorted.forEach(([name, pts, avgRank], i) => {
-    const rank = ptsSortAsc ? POINTS_DATA.length - i : i + 1;
+
+  sorted.forEach((name, i) => {
+    const d = ENRICHED_DATA[name];
+    const rank = i + 1;
     const flagUrl = flagUrl2(name);
     const posClass = rank===1?'gold':rank===2?'silver':rank===3?'bronze':'';
-    const barW = Math.round((pts/max)*100);
-    const avgDisplay = avgRank ? `#${avgRank}` : '—';
-    html += `
+    const barW = Math.round((d.pts / maxPts) * 100);
+    const avgDisplay = d.avg_rank ? `#${d.avg_rank}` : '—';
+    html2 += `
     <div class="pts-row">
       <div class="pts-pos ${posClass}">${rank}</div>
       <div class="pts-flag">${flagUrl ? `<img src="${flagUrl}" alt="${name}">` : '🏳'}</div>
@@ -1185,40 +1246,17 @@ function renderPointsTable() {
       <div class="pts-bar-wrap">
         <div class="pts-bar-bg"><div class="pts-bar-fill" style="width:${barW}%"></div></div>
       </div>
-      <div class="pts-score">${pts}</div>
-      <div class="pts-avg-col">${avgDisplay}</div>
+      <div class="pts-score" style="${ptsSortCol==='pts'?'color:var(--gold)':''}">${d.pts}</div>
+      <div class="pts-avg-col" style="${ptsSortCol==='avg_rank'?'color:var(--gold)':''}">${avgDisplay}</div>
+      <div class="pts-extra-col" style="color:#22c55e${ptsSortCol==='wins'?';font-size:20px':''}">${d.wins}</div>
+      <div class="pts-extra-col" style="color:#eab308${ptsSortCol==='draws'?';font-size:20px':''}">${d.draws}</div>
+      <div class="pts-extra-col" style="color:#ef4444${ptsSortCol==='losses'?';font-size:20px':''}">${d.losses}</div>
+      <div class="pts-extra-col" style="color:#22c55e${ptsSortCol==='rel_alta'?';font-size:20px':''}">${d.rel_alta}</div>
+      <div class="pts-extra-col" style="color:#eab308${ptsSortCol==='rel_inter'?';font-size:20px':''}">${d.rel_inter}</div>
+      <div class="pts-extra-col" style="color:#ef4444${ptsSortCol==='rel_baja'?';font-size:20px':''}">${d.rel_baja}</div>
     </div>`;
   });
-  document.getElementById('ptsTableWrap').innerHTML = html;
+  document.getElementById('ptsTableWrap').innerHTML = html2;
 }
 
-function sortPtsBy(col) {
-  if(ptsSortCol === col) {
-    ptsSortAsc = !ptsSortAsc; // toggle direction
-  } else {
-    ptsSortCol = col;
-    ptsSortAsc = false; // always start highest first on new column
-  }
-  renderPointsTable();
-}
-
-function switchTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  if(tab === 'grid') {
-    document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-    document.getElementById('mainGrid').style.display = '';
-    document.getElementById('gridControls').style.display = '';
-    document.getElementById('pointsPage').classList.remove('visible');
-  } else {
-    document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-    document.getElementById('mainGrid').style.display = 'none';
-    document.getElementById('gridControls').style.display = 'none';
-    document.getElementById('pointsPage').classList.add('visible');
-    renderPointsTable();
-  }
-}
-
-loadData();
-</script>
-</body>
-</html>
+>
