@@ -121,10 +121,7 @@ main{padding:28px 32px;max-width:1440px;margin:0 auto;}
 }
 
 /* DETAIL PAGE OVERLAY */
-#detailPage{
-  display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;
-  background:var(--bg);overflow-y:auto;
-}
+#detailPage{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:var(--bg);overflow-y:auto;}
 @keyframes slideIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
 .detail-header{
@@ -1248,7 +1245,6 @@ function switchTab(tab) {
   if(!showGrid) renderPointsTable();
 }
 
-window.addEventListener('popstate', () => { document.getElementById('detailPage').style.display = 'none'; });
 loadData();
 </script>
 <!-- DETAIL PAGE -->
