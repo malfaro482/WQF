@@ -1137,14 +1137,9 @@ function closeDetail() {
   history.pushState({}, '', location.pathname);
 }
 
-function openTeamFromHash() {
-  const teamFromHash = decodeURIComponent(location.hash.replace(/^#/, '')).trim();
-  if(teamFromHash) openTeam(teamFromHash);
-  else document.getElementById('detailPage').style.display = 'none';
-}
 
-window.addEventListener('popstate', openTeamFromHash);
-window.addEventListener('hashchange', openTeamFromHash);
+
+
 
 // Handle direct URL with hash
 
@@ -1253,24 +1248,8 @@ function switchTab(tab) {
   if(!showGrid) renderPointsTable();
 }
 
-
-document.addEventListener('DOMContentLoaded', async () => {
-  await loadData();
-
-  // Bind clicks in JS too, so it works even if inline onclick is interrupted by browser/GitHub behavior.
-  document.querySelectorAll('.team-card').forEach(card => {
-    const nameEl = card.querySelector('.card-name');
-    if(!nameEl) return;
-    const teamName = nameEl.textContent.trim();
-    card.addEventListener('click', (ev) => {
-      ev.preventDefault();
-      ev.stopPropagation();
-      openTeam(teamName);
-    });
-  });
-
-  openTeamFromHash();
-});
+window.addEventListener('popstate', () => { document.getElementById('detailPage').style.display = 'none'; });
+loadData();
 </script>
 <!-- DETAIL PAGE -->
 <div id="detailPage" style="display:none">
