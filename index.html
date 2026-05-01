@@ -1253,12 +1253,6 @@ function switchTab(tab) {
   if(!showGrid) renderPointsTable();
 }
 
-function toggleSort() {
-  if(!currentTeam || !allData) return;
-  sortAsc = !sortAsc;
-  const matches = (allData.equipos || {})[currentTeam] || [];
-  renderTable(currentTeam, matches);
-}
 
 document.addEventListener('DOMContentLoaded', async () => {
   await loadData();
