@@ -122,11 +122,10 @@ main{padding:28px 32px;max-width:1440px;margin:0 auto;position:relative;z-index:
 
 /* DETAIL PAGE OVERLAY */
 #detailPage{
-  display:none;position:fixed;inset:0;z-index:200;
+  display:none;position:fixed;inset:0;z-index:500;
   background:var(--bg);overflow-y:auto;
-  animation:slideIn .25s ease;
 }
-#detailPage.visible{display:block}
+#detailPage.visible{display:block;opacity:1;}
 @keyframes slideIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
 .detail-header{
@@ -264,8 +263,8 @@ footer{
   .tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
 
   /* POINTS TABLE PAGE */
-  #pointsPage{display:none;padding:28px 32px;}
-  #pointsPage.visible{display:block;}
+  #pointsPage{display:none;padding:28px 32px;pointer-events:none;}
+  #pointsPage.visible{display:block;pointer-events:auto;}
   .pts-header{
     display:flex;align-items:center;justify-content:space-between;
     margin-bottom:20px;flex-wrap:wrap;gap:12px;
@@ -774,7 +773,7 @@ footer{
 
 </div>
 </main>
-<div id="pointsPage">
+<div id="pointsPage" style="display:none">
   <div class="pts-header">
     <div class="pts-title">Tabla de Puntos — Últimos 20 Partidos</div>
   </div>
