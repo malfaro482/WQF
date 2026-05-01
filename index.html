@@ -1274,14 +1274,14 @@ function switchTab(tab) {
   const ctrlEl = document.getElementById('gridControls');
   if(tab === 'grid') {
     document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-    gridEl.style.display = '';
+    gridEl.style.cssText = 'display:grid;grid-template-columns:repeat(2,1fr);gap:0 32px;';
     ctrlEl.style.display = '';
-    ptsEl.style.display  = 'none';
+    ptsEl.style.cssText  = 'display:none;';
   } else {
     document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-    gridEl.style.display = 'none';
+    gridEl.style.cssText = 'display:none;';
     ctrlEl.style.display = 'none';
-    ptsEl.style.display  = 'block';
+    ptsEl.style.cssText  = 'display:block;';
     renderPointsTable();
   }
 }
