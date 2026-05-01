@@ -56,7 +56,7 @@ input[type=text]{width:180px}
 input::placeholder{color:var(--text2)}
 
 /* MAIN */
-main{padding:28px 32px;max-width:1440px;margin:0 auto;position:relative;z-index:1}
+main{padding:28px 32px;max-width:1440px;margin:0 auto;}
 
 /* GROUP SECTIONS */
 .group-section{margin-bottom:36px}
@@ -122,10 +122,11 @@ main{padding:28px 32px;max-width:1440px;margin:0 auto;position:relative;z-index:
 
 /* DETAIL PAGE OVERLAY */
 #detailPage{
-  display:none;position:fixed;inset:0;z-index:500;
+  display:none;position:fixed;inset:0;z-index:9999;
   background:var(--bg);overflow-y:auto;
+  animation:slideIn .25s ease;
 }
-#detailPage.visible{display:block;opacity:1;}
+#detailPage.visible{display:block;}
 @keyframes slideIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
 .detail-header{
@@ -263,8 +264,8 @@ footer{
   .tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
 
   /* POINTS TABLE PAGE */
-  #pointsPage{display:none;padding:28px 32px;pointer-events:none;}
-  #pointsPage.visible{display:block;pointer-events:auto;}
+  #pointsPage{display:none;padding:28px 32px;}
+  #pointsPage.visible{display:block;}
   .pts-header{
     display:flex;align-items:center;justify-content:space-between;
     margin-bottom:20px;flex-wrap:wrap;gap:12px;
@@ -804,36 +805,6 @@ footer{
 
 <footer>FIFA World Cup 2026 &nbsp;·&nbsp; Datos: ESPN &nbsp;·&nbsp; Solo partidos oficiales</footer>
 
-<!-- DETAIL PAGE -->
-<div id="detailPage">
-  <div class="detail-header">
-    <button class="back-btn" onclick="closeDetail()">&#8592; Volver</button>
-    <div class="detail-team-info">
-      <div class="detail-flag" id="detailFlag"></div>
-      <div>
-        <div class="detail-name" id="detailName"></div>
-        <div class="detail-meta" id="detailMeta"></div>
-      </div>
-    </div>
-    <div class="detail-group-badge" id="detailGroupBadge"></div>
-  </div>
-  <div class="detail-body">
-    <div class="detail-qual-banner" id="qualBanner" style="display:none"></div>
-    <div class="stats-row" id="detailStats"></div>
-    <div class="matches-table-wrap">
-      <div class="matches-table-title">Últimos 20 Partidos Oficiales</div>
-      <table>
-        <thead>
-          <tr>
-            <th>#</th><th id="fechaTh" style="cursor:pointer;user-select:none" onclick="toggleSort()">Fecha ↓</th><th>Local</th><th>Marcador</th><th>Visitante</th>
-            <th>Resultado</th><th>Competición</th><th>Estadio / Ciudad</th><th>Relevancia</th>
-          </tr>
-        </thead>
-        <tbody id="detailTableBody"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
 
 <script>
 const FLAG_CODES = {"Alemania": "de", "Arabia Saudita": "sa", "Argelia": "dz", "Argentina": "ar", "Australia": "au", "Austria": "at", "Bosnia y Herzegovina": "ba", "Brasil": "br", "Bélgica": "be", "Cabo Verde": "cv", "Canadá": "ca", "Colombia": "co", "Corea del Sur": "kr", "Costa de Marfil": "ci", "Croacia": "hr", "Curazao": "cw", "Ecuador": "ec", "Egipto": "eg", "Escocia": "gb-sct", "España": "es", "Estados Unidos": "us", "Francia": "fr", "Ghana": "gh", "Haití": "ht", "Inglaterra": "gb-eng", "Irak": "iq", "Irán": "ir", "Japón": "jp", "Jordania": "jo", "Marruecos": "ma", "México": "mx", "Noruega": "no", "Nueva Zelanda": "nz", "Panamá": "pa", "Paraguay": "py", "Países Bajos": "nl", "Portugal": "pt", "Qatar": "qa", "RD Congo": "cd", "República Checa": "cz", "Senegal": "sn", "Sudáfrica": "za", "Suecia": "se", "Suiza": "ch", "Turquía": "tr", "Túnez": "tn", "Uruguay": "uy", "Uzbekistán": "uz"};
@@ -1294,5 +1265,36 @@ function toggleSort() {
 
 loadData();
 </script>
+<!-- DETAIL PAGE -->
+<div id="detailPage">
+  <div class="detail-header">
+    <button class="back-btn" onclick="closeDetail()">&#8592; Volver</button>
+    <div class="detail-team-info">
+      <div class="detail-flag" id="detailFlag"></div>
+      <div>
+        <div class="detail-name" id="detailName"></div>
+        <div class="detail-meta" id="detailMeta"></div>
+      </div>
+    </div>
+    <div class="detail-group-badge" id="detailGroupBadge"></div>
+  </div>
+  <div class="detail-body">
+    <div class="detail-qual-banner" id="qualBanner" style="display:none"></div>
+    <div class="stats-row" id="detailStats"></div>
+    <div class="matches-table-wrap">
+      <div class="matches-table-title">Últimos 20 Partidos Oficiales</div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th id="fechaTh" style="cursor:pointer;user-select:none" onclick="toggleSort()">Fecha ↓</th><th>Local</th><th>Marcador</th><th>Visitante</th>
+            <th>Resultado</th><th>Competición</th><th>Estadio / Ciudad</th><th>Relevancia</th>
+          </tr>
+        </thead>
+        <tbody id="detailTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
