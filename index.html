@@ -124,9 +124,7 @@ main{padding:28px 32px;max-width:1440px;margin:0 auto;}
 #detailPage{
   display:none;position:fixed;inset:0;z-index:9999;
   background:var(--bg);overflow-y:auto;
-  animation:slideIn .25s ease;
 }
-#detailPage.visible{display:block;}
 @keyframes slideIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
 .detail-header{
@@ -1075,7 +1073,8 @@ function openTeam(teamName) {
 
   // Show overlay
   const page = document.getElementById('detailPage');
-  page.classList.add('visible');
+  page.style.display = 'block';
+  page.style.opacity = '1';
   page.scrollTop = 0;
 
   // Update URL hash
@@ -1128,7 +1127,19 @@ function renderTable(teamName, matches) {
 }
 
 function closeDetail() {
-  document.getElementById('detailPage').classList.remove('visible');
+  const page = document.getElementById('detailPage');
+  page.style.display = 'none';
+  page.style.opacity = '';
+  // Restore main grid view
+  const gridEl = document.getElementById('mainGrid');
+  const ctrlEl = document.getElementById('gridControls');
+  const ptsEl  = document.getElementById('pointsPage');
+  gridEl.style.cssText = 'display:grid;grid-template-columns:repeat(2,1fr);gap:0 32px;';
+  ctrlEl.style.display = '';
+  ptsEl.style.display  = 'none';
+  // Restore grid tab active state
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
   history.pushState({}, '', location.pathname);
 }
 
