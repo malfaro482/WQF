@@ -122,7 +122,7 @@ main{padding:28px 32px;max-width:1440px;margin:0 auto;}
 
 /* DETAIL PAGE OVERLAY */
 #detailPage{
-  display:none;position:fixed;inset:0;z-index:9999;
+  display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;
   background:var(--bg);overflow-y:auto;
 }
 @keyframes slideIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
@@ -1074,7 +1074,6 @@ function openTeam(teamName) {
   // Show overlay
   const page = document.getElementById('detailPage');
   page.style.display = 'block';
-  page.style.opacity = '1';
   page.scrollTop = 0;
 
   // Update URL hash
@@ -1127,33 +1126,16 @@ function renderTable(teamName, matches) {
 }
 
 function closeDetail() {
-  const page = document.getElementById('detailPage');
-  page.style.display = 'none';
-  page.style.opacity = '';
-  // Restore main grid view
-  const gridEl = document.getElementById('mainGrid');
-  const ctrlEl = document.getElementById('gridControls');
-  const ptsEl  = document.getElementById('pointsPage');
-  gridEl.style.cssText = 'display:grid;grid-template-columns:repeat(2,1fr);gap:0 32px;';
-  ctrlEl.style.display = '';
-  ptsEl.style.display  = 'none';
-  // Restore grid tab active state
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
+  document.getElementById('detailPage').style.display = 'none';
   history.pushState({}, '', location.pathname);
 }
 
-window.addEventListener('popstate', e => {
-  if(!e.state || !e.state.team) closeDetail();
+window.addEventListener('popstate', () => {
+  document.getElementById('detailPage').style.display = 'none';
 });
 
 // Handle direct URL with hash
-window.addEventListener('load', () => {
-  if(location.hash) {
-    const team = decodeURIComponent(location.hash.slice(1));
-    if(team) setTimeout(()=>openTeam(team), 300);
-  }
-});
+
 
 function toggleSort() {
   if(!currentTeam || !allData) return;
@@ -1250,21 +1232,13 @@ function sortPtsBy(col) { setPtsFilter(col); }
 
 function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  const gridEl = document.getElementById('mainGrid');
-  const ptsEl  = document.getElementById('pointsPage');
-  const ctrlEl = document.getElementById('gridControls');
-  if(tab === 'grid') {
-    document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-    gridEl.style.cssText = 'display:grid;grid-template-columns:repeat(2,1fr);gap:0 32px;';
-    ctrlEl.style.display = '';
-    ptsEl.style.cssText  = 'display:none;';
-  } else {
-    document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-    gridEl.style.cssText = 'display:none;';
-    ctrlEl.style.display = 'none';
-    ptsEl.style.cssText  = 'display:block;';
-    renderPointsTable();
-  }
+  const showGrid = tab === 'grid';
+  document.querySelector('.tab-btn:nth-child(' + (showGrid?'1':'2') + ')').classList.add('active');
+  document.getElementById('mainGrid').style.display    = showGrid ? '' : 'none';
+  document.getElementById('gridControls').style.display = showGrid ? '' : 'none';
+  document.getElementById('pointsPage').style.display  = showGrid ? 'none' : 'block';
+  document.getElementById('detailPage').style.display  = 'none';
+  if(!showGrid) renderPointsTable();
 }
 
 function toggleSort() {
@@ -1277,7 +1251,7 @@ function toggleSort() {
 loadData();
 </script>
 <!-- DETAIL PAGE -->
-<div id="detailPage">
+<div id="detailPage" style="display:none">
   <div class="detail-header">
     <button class="back-btn" onclick="closeDetail()">&#8592; Volver</button>
     <div class="detail-team-info">
