@@ -1340,6 +1340,7 @@ function renderPointsTable() {
       <th class="col-yellow sortable ${col==='relInter'?'sort-active':''}" onclick="sortPtsBy('relInter')">Relevancia<br>Intermedia ${ptsArrowFor('relInter')}</th>
       <th class="col-red sortable ${col==='relBajo'?'sort-active':''}" onclick="sortPtsBy('relBajo')">Relevancia<br>Baja ${ptsArrowFor('relBajo')}</th>
       <th class="sortable ${col==='official'?'sort-active':''}" onclick="sortPtsBy('official')">Competición<br>Oficial ${ptsArrowFor('official')}</th>
+      <th class="sortable ${col==='friendly'?'sort-active':''}" onclick="sortPtsBy('friendly')">Amistosos ${ptsArrowFor('friendly')}</th>
     </tr></thead><tbody>`;
 
   sorted.forEach((row, i) => {
@@ -1364,6 +1365,7 @@ function renderPointsTable() {
       <td class="cell-yellow">${row.relInter}</td>
       <td class="cell-red">${row.relBajo}</td>
       <td>${row.official}</td>
+      <td>${row.friendly}</td>
     </tr>`;
   });
   html += `</tbody></table></div></div>`;
